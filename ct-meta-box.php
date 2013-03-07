@@ -339,9 +339,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 						
 					// Upload
 					case 'upload':
-					
+
+						$upload_button = isset( $data['field']['upload_button'] ) ? $data['field']['upload_button'] : '';
+						$upload_title = isset( $data['field']['upload_title'] ) ? $data['field']['upload_title'] : '';
+						$upload_type = isset( $data['field']['upload_type'] ) ? $data['field']['upload_type'] : '';
+
 						$input  = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
-						$input .= ' <input type="button" value="' . esc_attr( $data['field']['file_button'] ) . '" class="upload_button button ctmb-upload-file" data-ctmb-insert-button=" ' . esc_attr( $data['field']['insert_button'] ) . '" /> ';
+						$input .= ' <input type="button" value="' . esc_attr( $upload_button ) . '" class="upload_button button ctmb-upload-file" data-ctmb-upload-type="' . esc_attr( $upload_type ) . '" data-ctmb-upload-title="' . esc_attr( $upload_title ) . '" /> ';
 					
 						break;
 						
