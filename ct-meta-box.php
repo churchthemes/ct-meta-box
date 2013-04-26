@@ -570,7 +570,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 
 			// General sanitization
 			$output = trim( stripslashes( $input ) );
-			
+ 
 			// Sanitize based on type
 			switch ( $this->meta_box['fields'][$key]['type'] ) {
 			
