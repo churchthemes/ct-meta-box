@@ -570,6 +570,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 
 			// General sanitization
 			$output = trim( stripslashes( $input ) );
+
+			// Empty value if specific page templates required but not used
+			if ( ! empty( $output ) && ! empty( $this->meta_box['fields'][$key]['page_templates'] ) && ( ! isset( $_POST['page_template'] ) || ! in_array( $_POST['page_template'], $this->meta_box['fields'][$key]['page_templates'] ) ) ) {
+				$output = '';
+			}
 			
 			// Sanitize based on type
 			switch ( $this->meta_box['fields'][$key]['type'] ) {
