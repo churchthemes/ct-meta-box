@@ -65,7 +65,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 				
 				// Set visibility of fields based on filtered or unfiltered array
 				$meta_box['fields'][$key]['hidden'] = ! in_array( $key, (array) $visible_fields ) ? true : false; // set hidden true if not in array
-				
+
 			}
 			
 			// Make config accessible
@@ -112,6 +112,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 			
 			// Hide if no visible fields
 			add_action( 'admin_head', array( &$this, 'hide' ) );
+
+			// Dynamically show/hide fields based on page template selection
+			add_action( 'admin_head', array( &$this, 'page_template_fields' ) );
 		
 		}
 		
@@ -125,7 +128,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 		
 			$visible = false;
 			
-			// Loop fields to find at least one that is vidible
+			// Loop fields to find at least one that is visible
 			$fields = $this->meta_box['fields'];
 			foreach ( $fields as $field ) {
 
@@ -148,11 +151,60 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 				}				
 				</style>				
 				<?php
-				
+
 			}
 		
 		}
+
+		/**
+		 * Page Template Fields
+		 *
+		 * If page_templates is specified, that field will dynamically show/hide depending on user's page template selection
+		 */
 		
+		function page_template_fields() {
+			
+			// Only on pages
+			$screen = get_current_screen();
+			if ( 'page' != $screen->post_type ) {
+				return;
+			}
+
+			// Loop fields
+			$fields = $this->meta_box['fields'];
+			foreach ( $fields as $key => $field ) {
+
+				// Only if has page_templates and not a field that is always hidden
+				if ( ! empty( $field['page_templates'] ) && empty( $field['hidden'] ) ) {
+
+					$json_page_templates = json_encode( $field['page_templates'] );
+
+					// Output JavaScript to <head> to handle field visibility based on page template selection
+					?>
+					<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						ctmb_page_template_field_visibility( '<?php echo $key; ?>', <?php echo $json_page_templates; ?> ); // First load
+						$( '#page_template' ).change( function() { // Changed page template
+							ctmb_page_template_field_visibility( '<?php echo $key; ?>', <?php echo $json_page_templates; ?> );
+						});
+					});
+					</script>
+					<?php
+
+				}
+
+			}
+
+/*
+		Bind on load and on change of page_template field
+			get current value
+			if not in list of wp_admin.page_templates, hide/show
+		EXCLUDE FIELDS WITH ['hidden'] set - they are already hidden and shd not re-show!! (not in support.php)
+*/
+
+
+		}
+
 		/**
 		 * Meta Box Output
 		 */
@@ -709,7 +761,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 
 				// Meta boxes JavaScript
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'ct-meta-box.js', false, $this->version ); // bust cache on update
-				
+
 			}
 			
 		}
