@@ -15,7 +15,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 		function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '0.8.6'; // March 7, 2013
+			$this->version = '0.9'; // April 26, 2013
 
 			// Prepare config
 			$this->prepare( $meta_box );
