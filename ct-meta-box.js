@@ -5,7 +5,7 @@
 jQuery(document).ready(function($) {
 
 	/**************************************
-	 * Media Uploader for Custom Field
+	 * MEDIA UPLOADER
 	 **************************************/
 
 	// Open media uploader on button click
@@ -52,3 +52,24 @@ jQuery(document).ready(function($) {
 	});
 
 });
+
+/**************************************
+ * PAGE TEMPLATES
+ **************************************/
+
+function ctmb_page_template_field_visibility( field, page_templates ) {
+
+	// Get current page template
+	var page_template = jQuery( '#page_template' ).val();
+
+	// Get field element to show/hide
+	var $field_container = jQuery( '#ctmb-field-' + field );
+
+	// Check if template is one of the required
+	if ( jQuery.inArray( page_template, page_templates ) !== -1 ) { // valid template
+		$field_container.show();
+	} else { // invalid template
+		$field_container.hide();
+	}
+
+}
