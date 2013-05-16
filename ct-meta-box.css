@@ -74,6 +74,14 @@
 				width: 60px;
 			}
 
+		/* Upload */
+
+		.ctmb-upload,
+		.ctmb-upload_textarea,
+		.ctmb-upload-file {
+			vertical-align: middle;
+		}
+
 /* Hidden Fields */
 		
 .ctmb-hidden {
