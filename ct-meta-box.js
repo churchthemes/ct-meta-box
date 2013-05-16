@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 
 		// Input element
-		$input_element = $(this).prev('input');
+		$input_element = $(this).prev('input, textarea');
 
 		// Media frame
 		var frame = wp.media({

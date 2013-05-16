@@ -251,15 +251,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 			
 			// Prepare styles for elements (core WP styling)
 			$default_classes = array(
-				'text'		=> 'regular-text',
-				'url'		=> 'regular-text',
-				'upload'	=> 'regular-text',
-				'textarea'	=> '',
-				'checkbox'	=> '',
-				'radio'		=> '',
-				'select'	=> '',
-				'number'	=> 'small-text',
-				'date'		=> '',
+				'text'				=> 'regular-text',
+				'url'				=> 'regular-text',
+				'upload'			=> 'regular-text',
+				'upload_textarea'	=> '',
+				'textarea'			=> '',
+				'checkbox'			=> '',
+				'radio'				=> '',
+				'select'			=> '',
+				'number'			=> 'small-text',
+				'date'				=> '',
 				
 			);
 			$classes = array();
@@ -389,7 +390,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 					
 						break;
 						
-					// Upload
+					// Upload - Regular (URL)
 					case 'upload':
 
 						$upload_button = isset( $data['field']['upload_button'] ) ? $data['field']['upload_button'] : '';
@@ -397,6 +398,20 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 						$upload_type = isset( $data['field']['upload_type'] ) ? $data['field']['upload_type'] : '';
 
 						$input  = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+						$input .= ' <input type="button" value="' . esc_attr( $upload_button ) . '" class="upload_button button ctmb-upload-file" data-ctmb-upload-type="' . esc_attr( $upload_type ) . '" data-ctmb-upload-title="' . esc_attr( $upload_title ) . '" /> ';
+					
+						break;
+						
+					// Upload - Textarea (URL or Embed Code)
+					case 'upload_textarea':
+
+						$upload_button = isset( $data['field']['upload_button'] ) ? $data['field']['upload_button'] : '';
+						$upload_title = isset( $data['field']['upload_title'] ) ? $data['field']['upload_title'] : '';
+						$upload_type = isset( $data['field']['upload_type'] ) ? $data['field']['upload_type'] : '';
+
+						// Textarea (URL or Embed Code)
+						$input = '<textarea ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '">' . esc_textarea( $data['value'] ) . '</textarea>';
+
 						$input .= ' <input type="button" value="' . esc_attr( $upload_button ) . '" class="upload_button button ctmb-upload-file" data-ctmb-upload-type="' . esc_attr( $upload_type ) . '" data-ctmb-upload-title="' . esc_attr( $upload_title ) . '" /> ';
 					
 						break;
@@ -640,9 +655,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 					if ( empty( $this->meta_box['fields'][$key]['allow_html'] ) ) {
 						$output = trim( strip_tags( $output ) );
 					}
-			
+					
 					// Sanitize HTML in case used (remove evil tags like script, iframe) - same as post content
-					$output = stripslashes( wp_filter_post_kses( addslashes( $output ), $allowedposttags ) );
+					if ( ! current_user_can( 'unfiltered_html' ) ) { // Admin only
+						$output = stripslashes( wp_filter_post_kses( addslashes( $output ), $allowedposttags ) );
+					}
 					
 					break;
 
@@ -675,12 +692,25 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 				// URL
 				// Upload (value is URL)
 				case 'url':
-				case 'upload':
-				
+				case 'upload': // Regular (URL)
+
 					$output = esc_url_raw( $output ); // force valid URL or use nothing
 					
 					break;
 					
+				// Upload Textarea (URL or Embed Code)
+				case 'upload_textarea':
+
+					// URL?
+					if ( preg_match( '/^(http(s*)):\/\//i', $output ) ) { // if begins with http:// or https://, must be URL
+						$output = esc_url_raw( $output ); // force valid URL or use nothing
+					}
+
+					// Otherwise it must be embed code, so HTML is always allowed
+					// <script>, <iframe>, etc. will be allowed for all users
+					
+					break;
+
 				// Date (form sanitized date from three inputs)
 				case 'date':
 				
