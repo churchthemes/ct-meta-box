@@ -195,14 +195,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and
 
 			}
 
-/*
-		Bind on load and on change of page_template field
-			get current value
-			if not in list of wp_admin.page_templates, hide/show
-		EXCLUDE FIELDS WITH ['hidden'] set - they are already hidden and shd not re-show!! (not in support.php)
-*/
-
-
 		}
 
 		/**
