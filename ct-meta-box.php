@@ -11,8 +11,12 @@
  * License: GNU GPLv2: http://www.gnu.org/licenses/gpl-2.0.html
  * GitHub: https://github.com/churchthemes/ct-meta-box
  */
- 
-if ( ! class_exists( 'CT_Meta_Box' ) ) { // in case class used in both theme and plugin
+
+// No direct access
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+// Class may be used in both theme and plugin(s)
+if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 	class CT_Meta_Box {
 	
