@@ -7,10 +7,10 @@
  * The CTMB_URL constant must be defined in order for JS/CSS to enqueue.
  * See Church Content Manager plugin for example usage.
  * 
- * @package 	CT_Meta_Box
- * @copyright 	Copyright (c) 2013, churchthemes.com
- * @link 		https://github.com/churchthemes/ct-meta-box
- * @license  	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package   CT_Meta_Box
+ * @copyright Copyright (c) 2013, churchthemes.com
+ * @link      https://github.com/churchthemes/ct-meta-box
+ * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 // No direct access
@@ -19,8 +19,20 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // Class may be used in both theme and plugin(s)
 if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
+	/**
+	 * Main class
+	 *
+	 * @since 0.8.5
+	 */
 	class CT_Meta_Box {
-	
+
+		/**
+		 * Constructor
+		 * 
+		 * @since 0.8.5
+		 * @param array $meta_box Configuration for meta box and its fields
+		 * @return void
+		 */
 		function __construct( $meta_box ) {
 
 			// Version - used in cache busting
@@ -42,11 +54,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 		
 		/**
-		 * Prepare Config
+		 * Prepare config
 		 *
 		 * This sets $this->meta_box and adds filtering for the enablement and overriding of fields.
+		 *
+		 * @since 0.8.5
+		 * @param array $meta_box Configuration for meta box and its fields
+		 * @return void
 		 */
-
 		function prepare( $meta_box ) {
 
 			// Get fields
@@ -83,9 +98,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Setup Meta Box
+		 * Setup meta box
+		 *
+		 * @since 0.8.5
+		 * @return void
 		 */
-
 		function setup() {
 
 			$screen = get_current_screen();
@@ -104,9 +121,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 		
 		/**
-		 * Add Meta Box
+		 * Add meta box
+		 *
+		 * @since 0.8.5
+		 * @return void
 		 */
-
 		function add() {
 	
 			// Add meta box
@@ -128,11 +147,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 		
 		/**
-		 * Hide Meta Box
+		 * Hide meta box
 		 *
 		 * If no visible fields in meta box, hide it.
+		 * 
+		 * @since 0.8.5
+		 * @return void
 		 */
-		 
 		function hide() {
 		
 			$visible = false;
@@ -166,11 +187,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Page Template Fields
+		 * Page template fields
 		 *
 		 * If page_templates is specified, that field will dynamically show/hide depending on user's page template selection
+		 *
+		 * @since 0.8.5
+		 * @return void
 		 */
-		
 		function page_template_fields() {
 			
 			// Only on pages
@@ -207,9 +230,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Meta Box Output
+		 * Meta box output
+		 * 
+		 * @since 0.8.5
+		 * @param object $post Post object
+		 * @param array $args Arguments
+		 * @return void
 		 */
-
 		function output( $post, $args ) {
 
  			// Nonce security
@@ -227,9 +254,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 		
 		/**
-		 * Field Output
+		 * Field output
+		 * 
+		 * @since 0.8.5
+		 * @param string $key Field key
+		 * @param array $field Field configuration
+		 * @return void
 		 */
-		
 		function field_output( $key, $field ) {
 		
 			global $wp_locale;
@@ -279,8 +310,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			if ( ! empty( $data['field']['attributes'] ) ) { // add custom attributes
 				foreach ( $data['field']['attributes'] as $attr_name => $attr_value ) {
 					$data['common_atts'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
-				}		
-			}			
+				}
+			}
 
 			// Field container classes
 			$data['field_class'] = array();
@@ -502,12 +533,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 	
 		/**
-		 * Get Field Value
+		 * Get field value
 		 *
 		 * Gets saved value or a default value if is first add or if value not allowed to be empty.
 		 * This assists with showing and saving/validating fields.
+		 * 
+		 * @since 0.8.5
+		 * @param string $key Field key
+		 * @param bool $default_only True if only want to check if default should be used
+		 * @return string Saved or default value
 		 */
-		 
 		function field_value( $key, $default_only = false ) {
 		
 			global $post;
@@ -549,9 +584,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}		
 
 		/**
-		 * Save Meta Boxes
+		 * Save meta boxes
+		 *
+		 * @since 0.8.5
+		 * @param int $post_id Post ID
+		 * @param object $post Data for post being saved
+		 * @return void
 		 */
-
 		function save( $post_id, $post ) {
 
 			// Is a POST occurring?
@@ -623,12 +662,15 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}		
 
 		/**
-		 * Sanitize Field Value
+		 * Sanitize field value
 		 *
 		 * Sanitize field's POST value before saving.
 		 * Provides General sanitization and sanitization based on field type, options, no_empty, etc.
+		 *
+		 * @since 0.8.5
+		 * @param string $key Field key
+		 * @return mixed Sanitized value
 		 */
-		 
 		function sanitize_field_value( $key ) {
 		
 			global $post_id, $post, $allowedposttags;
@@ -755,9 +797,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Enqueue Stylesheets
+		 * Enqueue stylesheets
+		 *
+		 * @since 0.8.5
+		 * @return void
 		 */
-		
 		function enqueue_styles() {
 
 			$screen = get_current_screen();
@@ -776,9 +820,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 		
 		/**
-		 * Enqueue Scripts
+		 * Enqueue scripts
+		 *
+		 * @since 0.8.5
+		 * @return void
 		 */
-		
 		function enqueue_scripts() {
 				
 			$screen = get_current_screen();
