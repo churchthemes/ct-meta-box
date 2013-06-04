@@ -6,10 +6,11 @@
  *
  * The CTMB_URL constant must be defined in order for JS/CSS to enqueue.
  * See Church Content Manager plugin for example usage.
- *
- * Copyright: churchthemes.com
- * License: GNU GPLv2: http://www.gnu.org/licenses/gpl-2.0.html
- * GitHub: https://github.com/churchthemes/ct-meta-box
+ * 
+ * @package 	CT_Meta_Box
+ * @copyright 	Copyright (c) 2013, churchthemes.com
+ * @link 		https://github.com/churchthemes/ct-meta-box
+ * @license  	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 // No direct access
@@ -23,7 +24,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '1.0.1'; // June 3, 2013
+			$this->version = '1.0.1';
 
 			// Prepare config
 			$this->prepare( $meta_box );
