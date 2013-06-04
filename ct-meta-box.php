@@ -217,7 +217,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		
 			// Loop fields
 			$fields = $this->meta_box['fields'];
-			foreach( $fields as $key => $field ) {
+			foreach ( $fields as $key => $field ) {
 
 				// Output field
 				$this->field_output( $key, $field );
@@ -277,7 +277,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Common attributes
 			$data['common_atts'] = 'name="' . esc_attr( $data['key'] ) . '" class="' . esc_attr( $data['classes'] ) . '"';
 			if ( ! empty( $data['field']['attributes'] ) ) { // add custom attributes
-				foreach( $data['field']['attributes'] as $attr_name => $attr_value ) {
+				foreach ( $data['field']['attributes'] as $attr_name => $attr_value ) {
 					$data['common_atts'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
 				}		
 			}			
@@ -296,7 +296,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Field container styles
 			$data['field_attributes'] = '';
 			if ( ! empty( $data['field']['field_attributes'] ) ) { // add custom attributes
-				foreach( $data['field']['field_attributes'] as $attr_name => $attr_value ) {
+				foreach ( $data['field']['field_attributes'] as $attr_name => $attr_value ) {
 					$data['field_attributes'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
 				}		
 			}
@@ -353,7 +353,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					
 						if ( ! empty( $data['field']['options'] ) ) {
 						
-							foreach( $data['field']['options'] as $option_value => $option_text ) {
+							foreach ( $data['field']['options'] as $option_value => $option_text ) {
 							
 								$esc_radio_id = $data['esc_element_id'] . '-' . $option_value;
 							
@@ -375,7 +375,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						if ( ! empty( $data['field']['options'] ) ) {
 						
 							$input .= '<select ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '">';
-							foreach( $data['field']['options'] as $option_value => $option_text ) {
+							foreach ( $data['field']['options'] as $option_value => $option_text ) {
 								$input .= '<option value="' . esc_attr( $option_value ) . '" ' . selected( $option_value, $data['value'], false ) . '> ' . esc_html( $option_text ) . '</option>';
 							}
 							$input .= '</select>';
@@ -582,7 +582,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			
 			// Sanitize fields
 			$sanitized_values = array();
-			foreach( $fields as $key => $field ) {
+			foreach ( $fields as $key => $field ) {
 			
 				// Sanitize value
 				// General sanitization and sanitization based on field type, options, no_empty, etc.
@@ -596,7 +596,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Save fields
-			foreach( $sanitized_values as $key => $value ) {
+			foreach ( $sanitized_values as $key => $value ) {
 
 				// Add value if it key does not exist
 				// Or upate value it key does exist
