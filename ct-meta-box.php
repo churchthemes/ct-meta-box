@@ -30,8 +30,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Constructor
 		 * 
 		 * @since 0.8.5
-		 * @param array $meta_box Configuration for meta box and its fields
-		 * @return void
+		 * @param array $meta_box Configuration for meta box and its fields		 
 		 */
 		function __construct( $meta_box ) {
 
@@ -59,8 +58,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * This sets $this->meta_box and adds filtering for the enablement and overriding of fields.
 		 *
 		 * @since 0.8.5
-		 * @param array $meta_box Configuration for meta box and its fields
-		 * @return void
+		 * @param array $meta_box Configuration for meta box and its fields		 
 		 */
 		function prepare( $meta_box ) {
 
@@ -101,7 +99,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Setup meta box
 		 *
 		 * @since 0.8.5
-		 * @return void
 		 */
 		function setup() {
 
@@ -123,8 +120,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Add meta box
 		 *
-		 * @since 0.8.5
-		 * @return void
+		 * @since 0.8.5		 
 		 */
 		function add() {
 	
@@ -151,8 +147,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * If no visible fields in meta box, hide it.
 		 * 
-		 * @since 0.8.5
-		 * @return void
+		 * @since 0.8.5		 
 		 */
 		function hide() {
 		
@@ -191,8 +186,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * If page_templates is specified, that field will dynamically show/hide depending on user's page template selection
 		 *
-		 * @since 0.8.5
-		 * @return void
+		 * @since 0.8.5		 
 		 */
 		function page_template_fields() {
 			
@@ -234,8 +228,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * 
 		 * @since 0.8.5
 		 * @param object $post Post object
-		 * @param array $args Arguments
-		 * @return void
+		 * @param array $args Arguments		 
 		 */
 		function output( $post, $args ) {
 
@@ -258,8 +251,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * 
 		 * @since 0.8.5
 		 * @param string $key Field key
-		 * @param array $field Field configuration
-		 * @return void
+		 * @param array $field Field configuration		 
 		 */
 		function field_output( $key, $field ) {
 		
@@ -588,8 +580,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * @since 0.8.5
 		 * @param int $post_id Post ID
-		 * @param object $post Data for post being saved
-		 * @return void
+		 * @param object $post Data for post being saved		 
 		 */
 		function save( $post_id, $post ) {
 
@@ -799,8 +790,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Enqueue stylesheets
 		 *
-		 * @since 0.8.5
-		 * @return void
+		 * @since 0.8.5		 
 		 */
 		function enqueue_styles() {
 
@@ -822,8 +812,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Enqueue scripts
 		 *
-		 * @since 0.8.5
-		 * @return void
+		 * @since 0.8.5		 
 		 */
 		function enqueue_scripts() {
 				
