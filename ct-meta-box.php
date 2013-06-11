@@ -27,12 +27,29 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 	class CT_Meta_Box {
 
 		/**
+		 * Plugin version
+		 *
+		 * @since 0.9
+		 * @var string
+		 */
+		public $version;
+
+		/**
+		 * Meta box configuration
+		 *
+		 * @since 0.9
+		 * @var array
+		 */
+		public $meta_box;
+
+		/**
 		 * Constructor
 		 * 
 		 * @since 0.8.5
+		 * @access public
 		 * @param array $meta_box Configuration for meta box and its fields		 
 		 */
-		function __construct( $meta_box ) {
+		public function __construct( $meta_box ) {
 
 			// Version - used in cache busting
 			$this->version = '1.0.3';
@@ -58,9 +75,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * This sets $this->meta_box and adds filtering for the enablement and overriding of fields.
 		 *
 		 * @since 0.8.5
+		 * @access public
 		 * @param array $meta_box Configuration for meta box and its fields		 
 		 */
-		function prepare( $meta_box ) {
+		public function prepare( $meta_box ) {
 
 			// Get fields
 			$fields = $meta_box['fields'];
@@ -99,8 +117,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Setup meta box
 		 *
 		 * @since 0.8.5
+		 * @access public
 		 */
-		function setup() {
+		public function setup() {
 
 			$screen = get_current_screen();
 
@@ -120,9 +139,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Add meta box
 		 *
-		 * @since 0.8.5		 
+		 * @since 0.8.5	
+		 * @access public	 
 		 */
-		function add() {
+		public function add() {
 	
 			// Add meta box
 			add_meta_box(
@@ -147,9 +167,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * If no visible fields in meta box, hide it.
 		 * 
-		 * @since 0.8.5		 
+		 * @since 0.8.5		
+		 * @access public 
 		 */
-		function hide() {
+		public function hide() {
 		
 			$visible = false;
 			
@@ -186,9 +207,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * If page_templates is specified, that field will dynamically show/hide depending on user's page template selection
 		 *
-		 * @since 0.8.5		 
+		 * @since 0.8.5	
+		 * @access public	 
 		 */
-		function page_template_fields() {
+		public function page_template_fields() {
 			
 			// Only on pages
 			$screen = get_current_screen();
@@ -227,10 +249,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Meta box output
 		 * 
 		 * @since 0.8.5
+		 * @access public
 		 * @param object $post Post object
 		 * @param array $args Arguments		 
 		 */
-		function output( $post, $args ) {
+		public function output( $post, $args ) {
 
  			// Nonce security
 			wp_nonce_field( $this->meta_box['id'] . '_save', $this->meta_box['id'] . '_nonce' );
@@ -250,10 +273,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Field output
 		 * 
 		 * @since 0.8.5
+		 * @access public
+		 * @global object $wp_locale
 		 * @param string $key Field key
 		 * @param array $field Field configuration		 
 		 */
-		function field_output( $key, $field ) {
+		public function field_output( $key, $field ) {
 		
 			global $wp_locale;
 		
@@ -531,11 +556,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * This assists with showing and saving/validating fields.
 		 * 
 		 * @since 0.8.5
+		 * @access public
 		 * @param string $key Field key
 		 * @param bool $default_only True if only want to check if default should be used
 		 * @return string Saved or default value
 		 */
-		function field_value( $key, $default_only = false ) {
+		public function field_value( $key, $default_only = false ) {
 		
 			global $post;
 			
@@ -579,10 +605,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Save meta boxes
 		 *
 		 * @since 0.8.5
+		 * @access public
 		 * @param int $post_id Post ID
 		 * @param object $post Data for post being saved		 
 		 */
-		function save( $post_id, $post ) {
+		public function save( $post_id, $post ) {
 
 			// Is a POST occurring?
 			if ( empty( $_POST ) ) {
@@ -659,10 +686,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * Provides General sanitization and sanitization based on field type, options, no_empty, etc.
 		 *
 		 * @since 0.8.5
+		 * @access public
 		 * @param string $key Field key
 		 * @return mixed Sanitized value
 		 */
-		function sanitize_field_value( $key ) {
+		public function sanitize_field_value( $key ) {
 		
 			global $post_id, $post, $allowedposttags;
 			
@@ -790,9 +818,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Enqueue stylesheets
 		 *
-		 * @since 0.8.5		 
+		 * @since 0.8.5	
+		 * @access public	 
 		 */
-		function enqueue_styles() {
+		public function enqueue_styles() {
 
 			$screen = get_current_screen();
 
@@ -812,9 +841,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Enqueue scripts
 		 *
-		 * @since 0.8.5		 
+		 * @since 0.8.5	
+		 * @access public	 
 		 */
-		function enqueue_scripts() {
+		public function enqueue_scripts() {
 				
 			$screen = get_current_screen();
 
