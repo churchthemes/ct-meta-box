@@ -29,7 +29,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Plugin version
 		 *
-		 * @since 0.9
+		 * @since 1.0.4
 		 * @var string
 		 */
 		public $version;
@@ -37,7 +37,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Meta box configuration
 		 *
-		 * @since 0.9
+		 * @since 1.0.4
 		 * @var array
 		 */
 		public $meta_box;
@@ -52,7 +52,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '1.0.3';
+			$this->version = '1.0.4';
 
 			// Prepare config
 			$this->prepare( $meta_box );
