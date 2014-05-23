@@ -8,7 +8,7 @@
  * See Church Theme Content plugin for example usage.
  *
  * @package   CT_Meta_Box
- * @copyright Copyright (c) 2013, churchthemes.com
+ * @copyright Copyright (c) 2013 - 2014, churchthemes.com
  * @link      https://github.com/churchthemes/ct-meta-box
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -52,7 +52,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '1.0.5';
+			$this->version = '1.0.6';
 
 			// Prepare config
 			$this->prepare( $meta_box );
