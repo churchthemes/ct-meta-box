@@ -1,7 +1,7 @@
 /**
  * CT Meta Box Stylesheet
  */
- 
+
 .ctmb-field {
 	margin: 12px 0;
 }
@@ -9,7 +9,7 @@
 	.ctmb-field.ctmb-no-top-margin {
 		margin-top: 0;
 	}
-	
+
 	.ctmb-field.ctmb-no-bottom-margin {
 		margin-bottom: 0;
 	}
@@ -40,7 +40,7 @@
 		.ctmb-value textarea {
 			width: 70%; /* leaves just enough room for butto on right */
 		}
-		
+
 		.ctmb-value textarea {
 			height: 56px;
 		}
@@ -49,7 +49,7 @@
 		textarea.ctmb-medium {
 			width: 250px;
 		}
-		
+
 		input[type=text].ctmb-small,
 		textarea.ctmb-small {
 			width: 100px;
@@ -59,17 +59,17 @@
 		textarea.ctmb-tiny {
 			width: 40px;
 		}
-		
+
 		/* Date */
-		
+
 		.ctmb-date {
 			vertical-align: baseline;
 		}
-			
+
 			.ctmb-date-day {
 				width: 45px;
 			}
-			
+
 			.ctmb-date-year {
 				width: 60px;
 			}
@@ -83,13 +83,13 @@
 		}
 
 /* Hidden Fields */
-		
+
 .ctmb-hidden {
 	display: none;
 }
-	
+
 /* Side Column */
-	
+
 #side-sortables .ctmb-name,
 #side-sortables .ctmb-value {
 	width: 100%;
