@@ -841,6 +841,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Always enable thickbox on add/edit post for custom meta upload fields
 				wp_enqueue_style( 'thickbox' );
 
+				// jQuery Timepicker
+				// https://github.com/jonthornton/jquery-timepicker
+				wp_enqueue_style( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'css/jquery.timepicker.css', false, $this->version ); // bust cache on update
+
 				// Meta boxes stylesheet
 				wp_enqueue_style( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'css/ct-meta-box.css', false, $this->version ); // bust cache on update
 
@@ -864,6 +868,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Always enable media-upload and thickbox on add/edit post for custom meta upload fields
 				wp_enqueue_script( 'media-upload' );
 				wp_enqueue_script( 'thickbox' );
+
+				// jQuery Timepicker
+				// https://github.com/jonthornton/jquery-timepicker
+				wp_enqueue_script( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'js/jquery.timepicker.min.js', false, $this->version ); // bust cache on update
 
 				// Meta boxes JavaScript
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
