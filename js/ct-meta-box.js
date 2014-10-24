@@ -55,6 +55,18 @@ jQuery( document ).ready( function( $ ) {
 
 	} );
 
+	/**************************************
+	 * TIMEPICKER
+	 **************************************/
+
+	// jQuery Timepicker for 'time' fields
+	// https://github.com/jonthornton/jquery-timepicker
+	$( '.ctmb-time' ).timepicker( {
+		noneOption: true,
+		timeFormat: 'g:i a',
+		minTime: '6:00 am'
+	} );
+
 } );
 
 /**************************************

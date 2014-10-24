@@ -298,7 +298,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$data['esc_value'] = esc_attr( $data['value'] );
 			$data['esc_element_id'] = 'ctmb-input-' . esc_attr( $data['key'] );
 
-			// Prepare styles for elements (core WP styling)
+			// Prepare styles for elements
+			// regular-text and small-text are core WP styling
 			$default_classes = array(
 				'text'				=> 'regular-text',
 				'url'				=> 'regular-text',
