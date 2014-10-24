@@ -310,6 +310,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'select'			=> '',
 				'number'			=> 'small-text',
 				'date'				=> '',
+				'time'				=> 'regular-text',
 
 			);
 			$classes = array();
@@ -499,6 +500,15 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						// Container end
 						$input .= '</div>';
+
+						break;
+
+					// Time
+					// HTML5 <time> not supported by major browsers
+					// Using this instead (like Google Calendar): https://github.com/jonthornton/jquery-timepicker
+					case 'time':
+
+						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						break;
 
@@ -832,7 +842,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				wp_enqueue_style( 'thickbox' );
 
 				// Meta boxes stylesheet
-				wp_enqueue_style( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'ct-meta-box.css', false, $this->version ); // bust cache on update
+				wp_enqueue_style( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'css/ct-meta-box.css', false, $this->version ); // bust cache on update
 
 			}
 
@@ -856,7 +866,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				wp_enqueue_script( 'thickbox' );
 
 				// Meta boxes JavaScript
-				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'ct-meta-box.js', false, $this->version ); // bust cache on update
+				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
 
 			}
 
