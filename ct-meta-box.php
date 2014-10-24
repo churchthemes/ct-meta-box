@@ -787,7 +787,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Date (form sanitized date from three inputs)
 				case 'date':
 
-					$output = '';
+					$output = ''; // will be empty if invalid time
 
 					// Get month, day and year from $_POST
 					$m = isset( $_POST[ $key . '-month' ] ) ? trim( $_POST[ $key . '-month' ] ) : '';
@@ -804,6 +804,24 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						// Form the date for saving in to database
 						$output = "$y-$m-$d";
 
+					}
+
+					break;
+
+				// Time
+				case 'time':
+
+					// Is time valid?
+					// If it's not valid 12 or 24 hour format, date will return 1970 instead of current year
+					$ts = strtotime( $output );
+					if ( date( 'Y', $ts ) == date( 'Y' ) ) {
+
+						// Convert to 24 hour time
+						// Easier sorting and comparison
+						$output  = date( 'H:i', $ts );
+
+					} else {
+						$output = ''; // return empty if invalid
 					}
 
 					break;
