@@ -545,6 +545,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						<?php echo $input; ?>
 
+						<?php if ( ! empty( $data['field']['after_input'] ) ) : ?>
+							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
+						<?php endif; ?>
+
 						<?php if ( ! empty( $data['field']['desc'] ) ) : ?>
 						<p class="description">
 							<?php echo $data['field']['desc']; ?>
