@@ -63,6 +63,11 @@
 			width: 40px;
 		}
 
+		input[type=text].ctmb-three-digits,
+		input[type=number].ctmb-three-digits {
+			width: 55px;
+		}
+
 		/* Date */
 
 		.ctmb-date {
