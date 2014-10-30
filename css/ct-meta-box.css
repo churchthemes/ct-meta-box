@@ -38,7 +38,7 @@
 
 		.ctmb-value input[type=text],
 		.ctmb-value textarea {
-			width: 70%; /* leaves just enough room for butto on right */
+			width: 70%; /* leaves just enough room for button on right */
 		}
 
 		.ctmb-value textarea {
@@ -46,16 +46,19 @@
 		}
 
 		input[type=text].ctmb-medium,
+		input[type=number].ctmb-medium,
 		textarea.ctmb-medium {
 			width: 250px;
 		}
 
 		input[type=text].ctmb-small,
+		input[type=number].ctmb-small,
 		textarea.ctmb-small {
 			width: 100px;
 		}
 
 		input[type=text].ctmb-tiny,
+		input[type=number].ctmb-tiny,
 		textarea.ctmb-tiny {
 			width: 40px;
 		}
