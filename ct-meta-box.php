@@ -484,7 +484,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input .= '<div class="ctmb-date">';
 
 						// Month
-						$input .= '<select name="' . esc_attr( $data['key'] ) . '-month" id="' . $data['esc_element_id'] . '-month">';
+						$input .= '<select name="' . esc_attr( $data['key'] ) . '-month" id="' . $data['esc_element_id'] . '-month" class="ctmb-date-month">';
 						$input .= '<option value=""></option>';
 						for ( $i = 1; $i <= 12; $i++ ) {
 							$month_num = str_pad( $i, 2, '0', STR_PAD_LEFT );
@@ -898,8 +898,32 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Meta boxes JavaScript
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
+				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
+					'week_days' => $this->week_days(), // to show translated week day date fields
+				) );
 
 			}
+
+		}
+
+		/**
+		 * Days of week, localized
+		 *
+		 * @since 1.1
+		 * @access public
+		 * @return array Array of days of week with 0 - 6 as keys and Sunday - Saturday translated as values
+		 */
+		public function week_days() {
+
+			global $wp_locale;
+
+			$week_days = array();
+
+			for ( $day = 0; $day < 7; $day++ ) {
+				$week_days[$day] = $wp_locale->get_weekday( $day );
+			}
+
+			return $week_days;
 
 		}
 

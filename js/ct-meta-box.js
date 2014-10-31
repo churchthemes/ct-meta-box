@@ -56,6 +56,15 @@ jQuery( document ).ready( function( $ ) {
 	} );
 
 	/**************************************
+	 * DATE
+	 **************************************/
+
+	// Show week day to the right of date input
+	// Do this on page load and when date is changed
+	ctmb_date_changed(); // on page load
+	$( '.ctmb-date select, .ctmb-date input' ).bind( 'change keyup', ctmb_date_changed );
+
+	/**************************************
 	 * TIMEPICKER
 	 **************************************/
 
@@ -90,4 +99,53 @@ function ctmb_page_template_field_visibility( field, page_templates ) {
 		$field_container.hide();
 	}
 
+}
+
+// Show week day to the right of date input
+// Do this on page load and when date is changed
+function ctmb_date_changed() {
+
+	// Loop date fields
+	jQuery( '.ctmb-date' ).each( function() {
+
+		var value_container, date_year, date_month, date_day, date, valid_date, day_of_week_num, day_of_week;
+
+		// Only if after_input is not already used for custom text
+		value_container = jQuery( this ).parent( '.ctmb-value' );
+		if ( ! jQuery( '.ctmb-after-input:not( .ctmb-day-of-week )', value_container ).length ) {
+
+			// Get month, day, year
+			date_month = jQuery( '.ctmb-date-month', this ).val();
+			date_year = jQuery( '.ctmb-date-year', this ).val();
+			date_day = jQuery( '.ctmb-date-day', this ).val();
+
+			// Valid date
+			if ( ctmb_checkdate( date_month, date_day, date_year ) ) {
+
+				// Get day of week
+				date = new Date( date_year, date_month - 1, date_day ); // Months are 0 - 11
+				day_of_week_num = date.getDay();
+				day_of_week = ctmb.week_days[ day_of_week_num ];
+
+				// Show or update day of week after input
+				jQuery( '.ctmb-day-of-week', value_container ).remove(); // remove before add, to update
+				jQuery( this ).after( ' <span class="ctmb-after-input ctmb-day-of-week">' + day_of_week + '</span>' );
+
+			} else { // invalid, show nothing after input
+				jQuery( '.ctmb-day-of-week', value_container ).remove();
+			}
+
+		}
+
+	} );
+
+}
+
+// Check for valid date
+// From http://phpjs.org/functions/checkdate/ (MIT License)
+// original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+// improved by: Pyerre
+// improved by: Theriault
+function ctmb_checkdate( m, d, y ) {
+	return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= ( new Date( y, m, 0 ) ).getDate();
 }
