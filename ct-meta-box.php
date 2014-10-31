@@ -51,6 +51,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function __construct( $meta_box ) {
 
+			global $ctmb_started;
+
 			// Version - used in cache busting
 			$this->version = '1.0.6';
 
@@ -61,11 +63,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			add_action( 'load-post-new.php', array( &$this, 'setup' ) ); // setup meta boxes on add
 			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit
 
-			// Enqueue styles
-			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
+			// Run once per page (not for every meta box)
+			if ( empty( $ctmb_started ) ) {
 
-			// Enqueue scripts
-			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+				$ctmb_started = true;
+
+				// Enqueue styles
+				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
+
+				// Enqueue scripts
+				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+
+			}
 
 		}
 
