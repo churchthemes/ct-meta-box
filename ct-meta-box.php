@@ -554,7 +554,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						<?php echo $input; ?>
 
-						<?php if ( ! empty( $data['field']['after_input'] ) ) : ?>
+						<?php
+						if (
+							! empty( $data['field']['after_input'] )
+							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'upload', 'url', 'date', 'time' ) ) // specific fields only
+						) :
+						?>
 							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
 						<?php endif; ?>
 
