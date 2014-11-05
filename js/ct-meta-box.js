@@ -5,6 +5,20 @@
 jQuery( document ).ready( function( $ ) {
 
 	/**************************************
+	 * VISIBILITY
+	 **************************************/
+
+// WHAT ABOUT MULTIPLE FORMS USING VISIBILIY???
+//   Because admin_enqueue_scripts is only run ONCE per meta box init, so only those fields are covered
+
+	// Change visibility of fields based on other fields' values
+	// This runs on page load and form field change
+	ctmb_change_visibility(); // on load
+	$( 'form .ctmb-field :input' ).change( function() { // any form input changes
+		ctmb_change_visibility();
+	} );
+
+	/**************************************
 	 * MEDIA UPLOADER
 	 **************************************/
 
@@ -79,9 +93,78 @@ jQuery( document ).ready( function( $ ) {
 } );
 
 /**************************************
- * PAGE TEMPLATES
+ * FUNCTIONS
  **************************************/
 
+// Change visibility of fields based on other fields' values
+function ctmb_change_visibility() {
+
+	jQuery.each( ctmb.visibility, function( field, conditions ) {
+
+		var $field, conditions_required, conditions_met;
+
+		$field = jQuery( '#ctmb-field-' + field );
+
+		// Don't affect fields never to be shown to the user
+		if ( $field.hasClass( '.ctmb-hidden' ) ) {
+			return true; // same as continue
+		}
+
+		// How many conditions are to be met?
+		conditions_required = 0;
+		for ( i in conditions ) {
+			if ( conditions.hasOwnProperty( i ) ) {
+				conditions_required++;
+			}
+		}
+
+		// Loop fields to see if other fields allow it to be shown
+		conditions_met = 0;
+		jQuery.each( conditions, function( condition_field, condition_value ) {
+
+			var compare, value, condition_field_selector;
+
+			// Default is to match equally
+			compare = '==';
+
+			// Is array used? Get value and compare
+			if ( jQuery.isArray( condition_value ) ) {
+				compare = condition_value[1];
+				condition_value = condition_value[0];
+			}
+
+			// Get field value
+			// Note: This may be incomplete
+			condition_field_selector = '[name=' + condition_field + ']';
+			field_type = jQuery( condition_field_selector ).prop( 'type' );
+			if ( 'radio' == field_type ) {
+				value = jQuery( condition_field_selector + ':checked' ).val();
+			} else {
+				value = jQuery( condition_field_selector ).val();
+			}
+
+			// Does the other field's value meet conditions?
+			if (
+				'==' == compare && condition_value == value
+				|| '!=' == compare && condition_value != value
+			) {
+				conditions_met++;
+			}
+
+		} );
+
+		// If all conditions met, show field; otherwise hide
+		if ( conditions_required == conditions_met ) {
+			$field.show();
+		} else {
+			$field.hide();
+		}
+
+	} );
+
+}
+
+// Page template field visibility
 function ctmb_page_template_field_visibility( field, page_templates ) {
 
 	var page_template, $field_container;
