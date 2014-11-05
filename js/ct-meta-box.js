@@ -8,9 +8,6 @@ jQuery( document ).ready( function( $ ) {
 	 * VISIBILITY
 	 **************************************/
 
-// WHAT ABOUT MULTIPLE FORMS USING VISIBILIY???
-//   Because admin_enqueue_scripts is only run ONCE per meta box init, so only those fields are covered
-
 	// Change visibility of fields based on other fields' values
 	// This runs on page load and form field change
 	ctmb_change_visibility(); // on load
