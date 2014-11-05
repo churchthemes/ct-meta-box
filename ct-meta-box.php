@@ -67,6 +67,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Enqueue scripts
 			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 
+			// Localize scripts
+			add_action( 'admin_enqueue_scripts', array( &$this, 'localize_scripts' ) );
+
 		}
 
 		/**
@@ -926,6 +929,33 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Meta boxes JavaScript
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
+
+			}
+
+		}
+
+		/**
+		 * Localize scripts
+		 *
+		 * @since 1.1
+		 * @access public
+		 */
+		public function localize_scripts() {
+
+			global $ctmb_scripts_localized;
+
+			// Scripts need not be localized for every meta box on a page
+			if ( ! empty( $ctmb_scripts_localized ) ) {
+				return;
+			} else {
+				$ctmb_scripts_localized = true;
+			}
+
+			// Get current screen
+			$screen = get_current_screen();
+
+			// Add/edit any post type
+			if ( 'post' == $screen->base ) {
 
 				// Make data available to script
 				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
