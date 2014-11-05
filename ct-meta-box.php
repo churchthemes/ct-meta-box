@@ -965,8 +965,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				}
 
 				// Localization per meta box
-				wp_localize_script( 'ctmb-meta-boxes', "ctmb_box_" . $this->meta_box['id'], array(
-					'visibility' => $this->visibility(), // array of fields' visibility conditions
+				wp_localize_script( 'ctmb-meta-boxes', "ctmb_meta_box_" . $this->meta_box['id'], array(
+					'fields' => $this->js_fields(), // Pass in only as much field data as necessary
 				) );
 
 			}
@@ -995,29 +995,33 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Field visibility
+		 * Field data for JavaScript
+		 *
+		 * Provide only as much field data as is needed
 		 *
 		 * @since 1.1
 		 * @access public
 		 * @return array Array of field visibility
 		 */
-		public function visibility() {
+		public function js_fields() {
 
-			$visibility = array();
+			$js_fields = array();
 
 			$fields = $this->meta_box['fields'];
 
 			foreach ( $fields as $key => $field ) {
 
+				// For now only visibility data is needed for each field
+
 				if ( empty( $field['visibility'] ) ) {
 					continue;
 				}
 
-				$visibility[$key] = $field['visibility'];
+				$js_fields[$key]['visibility'] = $field['visibility'];
 
 			}
 
-			return $visibility;
+			return $js_fields;
 
 		}
 
