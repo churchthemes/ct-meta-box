@@ -61,15 +61,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			add_action( 'load-post-new.php', array( &$this, 'setup' ) ); // setup meta boxes on add
 			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit
 
-			// Enqueue styles
-			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
-
-			// Enqueue scripts
-			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
-
-			// Localize scripts
-			add_action( 'admin_enqueue_scripts', array( &$this, 'localize_scripts' ) );
-
 		}
 
 		/**
@@ -134,6 +125,15 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Save meta boxes
 				add_action( 'save_post', array( &$this, 'save' ), 10, 2 ); // note: this always runs twice (once for revision, once for post)
+
+				// Enqueue styles
+				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
+
+				// Enqueue scripts
+				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+
+				// Localize scripts
+				add_action( 'admin_enqueue_scripts', array( &$this, 'localize_scripts' ) );
 
 			}
 
@@ -942,14 +942,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function localize_scripts() {
 
-			global $ctmb_scripts_localized;
-
-			// Scripts need not be localized for every meta box on a page
-			if ( ! empty( $ctmb_scripts_localized ) ) {
-				return;
-			} else {
-				$ctmb_scripts_localized = true;
-			}
+			global $ctmb_scripts_localized_globally;
 
 			// Get current screen
 			$screen = get_current_screen();
@@ -957,10 +950,23 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Add/edit any post type
 			if ( 'post' == $screen->base ) {
 
-				// Make data available to script
-				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
-					'week_days' => $this->week_days(), // to show translated week day date fields
-					'visibility' => $this->visibility(), // to show translated week day date fields
+				// Global localization
+				// This is data all meta boxes will use
+				// Run this localization once per page, not on every meta box instantiation
+				if ( empty( $ctmb_scripts_localized_globally ) ) {
+
+					wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
+						'week_days' => $this->week_days(), // to show translated week day date fields
+					) );
+
+					// Make sure this is done only once (on first meta box)
+					$ctmb_scripts_localized_globally = true;
+
+				}
+
+				// Localization per meta box
+				wp_localize_script( 'ctmb-meta-boxes', "ctmb_box_" . $this->meta_box['id'], array(
+					'visibility' => $this->visibility(), // array of fields' visibility conditions
 				) );
 
 			}
