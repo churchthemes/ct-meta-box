@@ -51,8 +51,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function __construct( $meta_box ) {
 
-			global $ctmb_started;
-
 			// Version - used in cache busting
 			$this->version = '1.0.6';
 
@@ -63,18 +61,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			add_action( 'load-post-new.php', array( &$this, 'setup' ) ); // setup meta boxes on add
 			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit
 
-			// Run once per page (not for every meta box)
-			if ( empty( $ctmb_started ) ) {
+			// Enqueue styles
+			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
 
-				$ctmb_started = true;
-
-				// Enqueue styles
-				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_styles' ) );
-
-				// Enqueue scripts
-				add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
-
-			}
+			// Enqueue scripts
+			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 
 		}
 
@@ -870,6 +861,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function enqueue_styles() {
 
+			global $ctmb_styles_enqueued;
+
+			// Styles need not be enqueued for every meta box on a page
+			if ( ! empty( $ctmb_styles_enqueued ) ) {
+				return;
+			} else {
+				$ctmb_styles_enqueued = true;
+			}
+
+			// Get current screen
 			$screen = get_current_screen();
 
 			// Add/edit any post type
@@ -892,11 +893,24 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Enqueue scripts
 		 *
+		 * These are scripts used by all meta boxes on a page.
+		 * This is enqueued once per page in constructor.
+		 *
 		 * @since 0.8.5
 		 * @access public
 		 */
 		public function enqueue_scripts() {
 
+			global $ctmb_scripts_enqueued;
+
+			// Scripts need not be enqueued for every meta box on a page
+			if ( ! empty( $ctmb_scripts_enqueued ) ) {
+				return;
+			} else {
+				$ctmb_scripts_enqueued = true;
+			}
+
+			// Get current screen
 			$screen = get_current_screen();
 
 			// Add/edit any post type
@@ -912,6 +926,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Meta boxes JavaScript
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
+
+				// Make data available to script
 				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
 					'week_days' => $this->week_days(), // to show translated week day date fields
 					'visibility' => $this->visibility(), // to show translated week day date fields
