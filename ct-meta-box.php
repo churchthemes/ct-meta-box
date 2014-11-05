@@ -914,6 +914,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
 				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
 					'week_days' => $this->week_days(), // to show translated week day date fields
+					'visibility' => $this->visibility(), // to show translated week day date fields
 				) );
 
 			}
@@ -938,6 +939,33 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			return $week_days;
+
+		}
+
+		/**
+		 * Field visibility
+		 *
+		 * @since 1.1
+		 * @access public
+		 * @return array Array of field visibility
+		 */
+		public function visibility() {
+
+			$visibility = array();
+
+			$fields = $this->meta_box['fields'];
+
+			foreach ( $fields as $key => $field ) {
+
+				if ( empty( $field['visibility'] ) ) {
+					continue;
+				}
+
+				$visibility[$key] = $field['visibility'];
+
+			}
+
+			return $visibility;
 
 		}
 
