@@ -965,7 +965,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				}
 
 				// Localization per meta box
-				// This will output a ctmb_fields var having meta box data merged in, the latest having all
+				// This will output a ctmb_meta_boxes var having data box merged in for each, the latest having all
 				// It is not ideal to output multiple vars of same name, so see if there is a better way
 				// (maybe WordPress will in the future cause duplicate names to override instead)
 				$data[$this->meta_box['id']] = $this->js_meta_box(); // pass in only as much meta box / field data as necessary
