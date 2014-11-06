@@ -970,8 +970,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// (maybe WordPress will in the future cause duplicate names to override instead)
 				$data[$this->meta_box['id']] = $this->js_meta_box(); // pass in only as much meta box / field data as necessary
 				$ctmb_fields_localized = empty( $ctmb_fields_localized ) ? array() : $ctmb_fields_localized;
-				$ctmb_fields_localized = array_merge( $ctmb_fields_localized, $data );
-				wp_localize_script( 'ctmb-meta-boxes', 'ctmb_meta_boxes', $ctmb_fields_localized );
+				if ( ! empty( $data[$this->meta_box['id']] ) ) { // if there is anything to add
+					$ctmb_fields_localized = array_merge( $ctmb_fields_localized, $data );
+					wp_localize_script( 'ctmb-meta-boxes', 'ctmb_meta_boxes', $ctmb_fields_localized );
+				}
 
 			}
 
@@ -1011,13 +1013,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			$js_meta_box = array();
 
+			// Loop fields
 			$fields = $this->meta_box['fields'];
-
-			// Field settings
 			foreach ( $fields as $key => $field ) {
 
 				// For now only visibility data is needed for each field
-
 				if ( empty( $field['visibility'] ) ) {
 					continue;
 				}
