@@ -114,7 +114,7 @@ function ctmb_change_visibility() {
 				$field = jQuery( '#ctmb-field-' + field );
 
 				// Don't affect fields never to be shown to the user
-				if ( $field.hasClass( '.ctmb-hidden' ) ) {
+				if ( $field.hasClass( 'ctmb-hidden' ) ) {
 					return true; // same as continue
 				}
 
