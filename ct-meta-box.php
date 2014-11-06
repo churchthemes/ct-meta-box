@@ -942,7 +942,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function localize_scripts() {
 
-			global $ctmb_scripts_localized_globally;
+			global $ctmb_scripts_localized_globally, $ctmb_fields_localized;
 
 			// Get current screen
 			$screen = get_current_screen();
@@ -965,9 +965,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				}
 
 				// Localization per meta box
-				wp_localize_script( 'ctmb-meta-boxes', "ctmb_meta_box_" . $this->meta_box['id'], array(
-					'fields' => $this->js_fields(), // Pass in only as much field data as necessary
-				) );
+				// This will output a ctmb_fields var having meta box data merged in, the latest having all
+				// It is not ideal to output multiple vars of same name, so see if there is a better way
+				// (maybe WordPress will in the future cause duplicate names to override instead)
+				$data[$this->meta_box['id']] = $this->js_meta_box(); // pass in only as much meta box / field data as necessary
+				$ctmb_fields_localized = empty( $ctmb_fields_localized ) ? array() : $ctmb_fields_localized;
+				$ctmb_fields_localized = array_merge( $ctmb_fields_localized, $data );
+				wp_localize_script( 'ctmb-meta-boxes', 'ctmb_meta_boxes', $ctmb_fields_localized );
 
 			}
 
@@ -995,20 +999,21 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		}
 
 		/**
-		 * Field data for JavaScript
+		 * Meta box and field data for JavaScript
 		 *
-		 * Provide only as much field data as is needed
+		 * Provide only as much data as is needed
 		 *
 		 * @since 1.1
 		 * @access public
-		 * @return array Array of field visibility
+		 * @return array Array of meta box and field settings
 		 */
-		public function js_fields() {
+		public function js_meta_box() {
 
-			$js_fields = array();
+			$js_meta_box = array();
 
 			$fields = $this->meta_box['fields'];
 
+			// Field settings
 			foreach ( $fields as $key => $field ) {
 
 				// For now only visibility data is needed for each field
@@ -1017,11 +1022,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					continue;
 				}
 
-				$js_fields[$key]['visibility'] = $field['visibility'];
+				$js_meta_box['fields'][$key]['visibility'] = $field['visibility'];
 
 			}
 
-			return $js_fields;
+			return $js_meta_box;
 
 		}
 

@@ -96,65 +96,80 @@ jQuery( document ).ready( function( $ ) {
 // Change visibility of fields based on other fields' values
 function ctmb_change_visibility() {
 
-	jQuery.each( ctmb.visibility, function( field, conditions ) {
+	// Loop meta boxes
+	jQuery.each( ctmb_meta_boxes, function( meta_box_id, meta_box_settings ) {
 
-		var $field, conditions_required, conditions_met;
+		// If fields are present
+		if ( meta_box_settings['fields'] !== undefined ) {
 
-		$field = jQuery( '#ctmb-field-' + field );
+			// Loop fields
+			jQuery.each( meta_box_settings['fields'], function( field, settings ) {
 
-		// Don't affect fields never to be shown to the user
-		if ( $field.hasClass( '.ctmb-hidden' ) ) {
-			return true; // same as continue
-		}
+				var $field, conditions, conditions_required, conditions_met;
 
-		// How many conditions are to be met?
-		conditions_required = 0;
-		for ( i in conditions ) {
-			if ( conditions.hasOwnProperty( i ) ) {
-				conditions_required++;
-			}
-		}
+				// Visibility conditions
+				conditions = settings['visibility'];
 
-		// Loop fields to see if other fields allow it to be shown
-		conditions_met = 0;
-		jQuery.each( conditions, function( condition_field, condition_value ) {
+				// Field element
+				$field = jQuery( '#ctmb-field-' + field );
 
-			var compare, value, condition_field_selector;
+				// Don't affect fields never to be shown to the user
+				if ( $field.hasClass( '.ctmb-hidden' ) ) {
+					return true; // same as continue
+				}
 
-			// Default is to match equally
-			compare = '==';
+				// How many conditions are to be met?
+				conditions_required = 0;
+				for ( i in conditions ) {
+					if ( conditions.hasOwnProperty( i ) ) {
+						conditions_required++;
+					}
+				}
 
-			// Is array used? Get value and compare
-			if ( jQuery.isArray( condition_value ) ) {
-				compare = condition_value[1];
-				condition_value = condition_value[0];
-			}
+				// Loop fields to see if other fields allow it to be shown
+				conditions_met = 0;
+				jQuery.each( conditions, function( condition_field, condition_value ) {
 
-			// Get field value
-			// Note: This may be incomplete
-			condition_field_selector = '[name=' + condition_field + ']';
-			field_type = jQuery( condition_field_selector ).prop( 'type' );
-			if ( 'radio' == field_type ) {
-				value = jQuery( condition_field_selector + ':checked' ).val();
-			} else {
-				value = jQuery( condition_field_selector ).val();
-			}
+					var compare, value, condition_field_selector;
 
-			// Does the other field's value meet conditions?
-			if (
-				'==' == compare && condition_value == value
-				|| '!=' == compare && condition_value != value
-			) {
-				conditions_met++;
-			}
+					// Default is to match equally
+					compare = '==';
 
-		} );
+					// Is array used? Get value and compare
+					if ( jQuery.isArray( condition_value ) ) {
+						compare = condition_value[1];
+						condition_value = condition_value[0];
+					}
 
-		// If all conditions met, show field; otherwise hide
-		if ( conditions_required == conditions_met ) {
-			$field.show();
-		} else {
-			$field.hide();
+					// Get field value
+					// Note: This may be incomplete
+					condition_field_selector = '[name=' + condition_field + ']';
+					field_type = jQuery( condition_field_selector ).prop( 'type' );
+					if ( 'radio' == field_type ) {
+						value = jQuery( condition_field_selector + ':checked' ).val();
+					} else {
+						value = jQuery( condition_field_selector ).val();
+					}
+
+					// Does the other field's value meet conditions?
+					if (
+						'==' == compare && condition_value == value
+						|| '!=' == compare && condition_value != value
+					) {
+						conditions_met++;
+					}
+
+				} );
+
+				// If all conditions met, show field; otherwise hide
+				if ( conditions_required == conditions_met ) {
+					$field.show();
+				} else {
+					$field.hide();
+				}
+
+			} );
+
 		}
 
 	} );
