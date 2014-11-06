@@ -96,6 +96,11 @@ jQuery( document ).ready( function( $ ) {
 // Change visibility of fields based on other fields' values
 function ctmb_change_visibility() {
 
+	// Only if ctmb_meta_boxes is defined
+	if ( typeof ctmb_meta_boxes === 'undefined' ) {
+		return;
+	}
+
 	// Loop meta boxes
 	jQuery.each( ctmb_meta_boxes, function( meta_box_id, meta_box_settings ) {
 
