@@ -500,7 +500,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input .= ' <input type="number" name="' . esc_attr( $data['key'] ) . '-day" id="' . $data['esc_element_id'] . '-day" min="1" max="31" value="' . esc_attr( $day ) . '" class="ctmb-date-day">';
 
 						// Year
-						$input .= ', <input type="number" name="' . esc_attr( $data['key'] ) . '-year" id="' . $data['esc_element_id'] . '-year" min="2000" max="2100" value="' . esc_attr( $year ) . '" class="ctmb-date-year">';
+						// Set the max year to 2037 because that's when timestamps will die
+						// This is a precaution to avoid unexpected results
+						$input .= ', <input type="number" name="' . esc_attr( $data['key'] ) . '-year" id="' . $data['esc_element_id'] . '-year" min="2000" max="2037" value="' . esc_attr( $year ) . '" class="ctmb-date-year">';
 
 						// Container end
 						$input .= '</div>';
