@@ -80,13 +80,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$meta_box = apply_filters( 'ctmb_meta_box-' . $meta_box['id'], $meta_box );
 			}
 
-			// Get fields
-			$fields = $meta_box['fields'];
-
 			// Filter fields by meta box ID
 			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID
-				$fields = apply_filters( 'ctmb_fields-' . $meta_box['id'], $fields );
+				$meta_box['fields'] = apply_filters( 'ctmb_fields-' . $meta_box['id'], $meta_box['fields'] );
 			}
+
+			// Get fields for looping
+			$fields = $meta_box['fields'];
 
 			// Fill array of visible fields with all by default
 			$visible_fields = array();
