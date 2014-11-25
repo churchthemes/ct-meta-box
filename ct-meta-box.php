@@ -111,6 +111,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Set visibility of fields based on filtered or unfiltered array
 				$meta_box['fields'][$key]['hidden'] = ! in_array( $key, (array) $visible_fields ) ? true : false; // set hidden true if not in array
 
+				// Allow filtering of individual fields after all other manipulations
+				$meta_box['fields'][$key] = apply_filters( 'ctmb_field-' . $key, $meta_box['fields'][$key] );
+
 			}
 
 			// Make config accessible
