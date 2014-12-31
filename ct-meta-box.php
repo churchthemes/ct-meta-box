@@ -971,8 +971,22 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Run this localization once per page, not on every meta box instantiation
 				if ( empty( $ctmb_scripts_localized_globally ) ) {
 
+					// Time format 12- or 24-hour format
+					$time_format = get_option( 'time_format' ); // from General Settings
+					if ( ! in_array( $time_format, array( 'g:i a', 'g:ia', 'g:i A', 'g:iA', 'H:i' ) ) ) {
+
+						// If user enters a custom format then default this to 12-hour format.
+						// It is most common in English-speaking countries and most others are able to recognize it.
+						// The reason for this is that a custom format may be invalid, causing the timepicker to fail
+						// converting it to the 24-hour format for saving.
+						$time_format = 'g:i a'; // default WordPress time format
+
+					}
+
+					// Data to pass
 					wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
-						'week_days' => $this->week_days(), // to show translated week day date fields
+						'week_days'		=> $this->week_days(), // to show translated week day date fields
+						'time_format'	=> $time_format, // time format from Settings > General
 					) );
 
 					// Make sure this is done only once (on first meta box)

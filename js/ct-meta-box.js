@@ -83,8 +83,8 @@ jQuery( document ).ready( function( $ ) {
 	// https://github.com/jonthornton/jquery-timepicker
 	$( '.ctmb-time' ).timepicker( {
 		noneOption: true,
-		timeFormat: 'g:i a',
-		minTime: '6:00 am'
+		timeFormat: ctmb.time_format, // from 12- or 24-hour format (always saved as 24-hour)
+		minTime: '06:00' // works for all formats
 	} );
 
 } );
