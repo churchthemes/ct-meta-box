@@ -52,7 +52,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '1.0.6';
+			$this->version = '2.0';
 
 			// Prepare config
 			$this->prepare( $meta_box );
@@ -953,7 +953,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Localize scripts
 		 *
-		 * @since 1.1
+		 * @since 2.0
 		 * @access public
 		 */
 		public function localize_scripts() {
@@ -1012,7 +1012,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		/**
 		 * Days of week, localized
 		 *
-		 * @since 1.1
+		 * @since 2.0
 		 * @access public
 		 * @return array Array of days of week with 0 - 6 as keys and Sunday - Saturday translated as values
 		 */
@@ -1035,7 +1035,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * Provide only as much data as is needed
 		 *
-		 * @since 1.1
+		 * @since 2.0
 		 * @access public
 		 * @return array Array of meta box and field settings
 		 */
