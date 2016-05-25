@@ -409,7 +409,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input .= '<label for="' . $data['esc_element_id'] . '">';
 						$input .= '	<input type="checkbox" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="1"' . checked( '1', $data['value'], false ) . '/>';
 						if ( ! empty( $data['field']['checkbox_label'] ) ) {
-							$input .= ' ' . esc_html( $data['field']['checkbox_label'] );
+							$input .= ' ';
+							$input .= wp_kses(
+											$data['field']['checkbox_label'],
+											array(
+												'b' => array(),
+												'strong' => array(),
+												'a' => array(
+													'href' => array(),
+													'target' => array(),
+												),
+											)
+										);
 						}
 						$input .= '</label>';
 
