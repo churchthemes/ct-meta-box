@@ -164,7 +164,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Add meta box
 			add_meta_box(
 				$this->meta_box['id'],
-				$this->meta_box['title'],
+				esc_html( $this->meta_box['title'] ),
 				array( &$this, 'output' ),
 				$this->meta_box['post_type'],
 				$this->meta_box['context'],
@@ -409,7 +409,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input .= '<label for="' . $data['esc_element_id'] . '">';
 						$input .= '	<input type="checkbox" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="1"' . checked( '1', $data['value'], false ) . '/>';
 						if ( ! empty( $data['field']['checkbox_label'] ) ) {
-							$input .= ' ' . $data['field']['checkbox_label'];
+							$input .= ' ' . esc_html( $data['field']['checkbox_label'] );
 						}
 						$input .= '</label>';
 
@@ -574,9 +574,24 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						<?php endif; ?>
 
 						<?php if ( ! empty( $data['field']['desc'] ) ) : ?>
-						<p class="description">
-							<?php echo $data['field']['desc']; ?>
-						</p>
+
+							<p class="description">
+								<?php
+								echo wp_kses(
+									$data['field']['desc'],
+									array(
+										'b' => array(),
+										'strong' => array(),
+										'a' => array(
+											'href' => array(),
+											'target' => array(),
+										),
+										'br' => array(),
+									)
+								)
+								?>
+							</p>
+
 						<?php endif; ?>
 
 					</div>
