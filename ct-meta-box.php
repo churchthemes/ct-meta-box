@@ -272,6 +272,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function output( $post, $args ) {
 
+			// Before fields are output
+			do_action( 'ctmb_before_fields', $post, $args );
+
  			// Nonce security
 			wp_nonce_field( $this->meta_box['id'] . '_save', $this->meta_box['id'] . '_nonce' );
 
@@ -283,6 +286,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$this->field_output( $key, $field );
 
 			}
+
+			// After fields are output
+			do_action( 'ctmb_after_fields', $post, $args );
 
 		}
 
