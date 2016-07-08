@@ -105,11 +105,12 @@
 	/* Inline radio option */
 
 	.ctc-radio-inline .ctc-radio-container {
+		margin-bottom: 2px;
 		display: inline-block;
 	}
 
-	.ctc-radio-inline .ctc-radio-container:not(:first-child) {
-		margin-left: 11px;
+	.ctc-radio-inline .ctc-radio-container:not(:last-child) {
+		margin-right: 11px;
 	}
 
 /* Hidden Fields */
