@@ -333,6 +333,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'radio'				=> '',
 				'select'			=> '',
 				'number'			=> 'small-text',
+				'range'				=> '',
 				'date'				=> '',
 				'time'				=> 'regular-text',
 
@@ -476,6 +477,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						break;
 
+					// Range
+					case 'range':
+
+						$input = '<input type="range" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+
+						break;
+
+
 					// Upload - Regular (URL)
 					case 'upload':
 
@@ -585,7 +594,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						<?php
 						if (
 							! empty( $data['field']['after_input'] )
-							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'upload', 'url', 'date', 'time' ) ) // specific fields only
+							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'range', 'upload', 'url', 'date', 'time' ) ) // specific fields only
 						) :
 						?>
 							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
@@ -818,6 +827,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Number
 				case 'number':
+
+					$output = (int) $output; // force number
+
+					break;
+
+				// Range
+				case 'range':
 
 					$output = (int) $output; // force number
 
