@@ -102,6 +102,16 @@
 			color: #595959;
 		}
 
+	/* Inline radio option */
+
+	.ctc-radio-inline .ctc-radio-container {
+		display: inline-block;
+	}
+
+	.ctc-radio-inline .ctc-radio-container:not(:first-child) {
+		margin-left: 11px;
+	}
+
 /* Hidden Fields */
 
 .ctmb-hidden {

@@ -358,6 +358,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			// Field container classes
 			$data['field_class'] = array();
 			$data['field_class'][] = 'ctmb-field';
+			$data['field_class'][] = 'ctmb-field-type-' . $data['field']['type'];
 			if ( ! empty( $data['field']['hidden'] ) ) { // Hidden (for internal use only, via prepare() filter)
 				$data['field_class'][] = 'ctmb-hidden';
 			}
@@ -441,7 +442,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 								$esc_radio_id = $data['esc_element_id'] . '-' . $option_value;
 
-								$input .= '<div>';
+								$input .= '<div class="ctc-radio-container">';
 								$input .= '	<label for="' . $esc_radio_id . '">';
 								$input .= '		<input type="radio" ' . $data['common_atts'] . ' id="' . $esc_radio_id . '" value="' . esc_attr( $option_value ) . '"' . checked( $option_value, $data['value'], false ) . '/> ' . esc_html( $option_text );
 								$input .= '	</label>';
