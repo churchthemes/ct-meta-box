@@ -5,7 +5,7 @@
  * This class can be used by themes and plugins to generate meta boxes and custom fields.
  *
  * The CTMB_URL constant must be defined in order for JS/CSS to enqueue.
- * See Church Theme Content plugin for example usage.
+ * See Church Content plugin for example usage.
  *
  * @package   CT_Meta_Box
  * @copyright Copyright (c) 2013 - 2017, churchthemes.com
