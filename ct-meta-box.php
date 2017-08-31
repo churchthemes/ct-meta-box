@@ -52,7 +52,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function __construct( $meta_box ) {
 
 			// Version - used in cache busting
-			$this->version = '2.1';
+			$this->version = '2.1.1';
 
 			// Prepare config
 			$this->prepare( $meta_box );
