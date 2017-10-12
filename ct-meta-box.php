@@ -330,6 +330,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'upload_textarea'	=> '',
 				'textarea'			=> '',
 				'checkbox'			=> '',
+				'checkbox_multiple'	=> '',
 				'radio'				=> '',
 				'select'			=> '',
 				'number'			=> 'small-text',
@@ -431,6 +432,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 										);
 						}
 						$input .= '</label>';
+
+						break;
+
+
+					// Checkbox Multiple
+					case 'checkbox_multiple':
+
+						$input  = 'checkbox multiple';
 
 						break;
 
@@ -810,6 +819,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				case 'checkbox':
 
 					$output = ! empty( $output ) ? '1' : '';
+
+					break;
+
+				// Checkbox Multiple
+				case 'checkbox_multiple':
+
 
 					break;
 
