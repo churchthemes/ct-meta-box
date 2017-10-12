@@ -447,13 +447,24 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						if ( ! empty( $data['field']['options'] ) ) {
 
+							// Get saved values.
+							$values = (array) json_decode( $data['value'] ); // cast to array in case empty.
+
+							// Make list of checkboxes.
 							foreach ( $data['field']['options'] as $option_value => $option_text ) {
 
 								$esc_checkbox_id = $data['esc_element_id'] . '-' . $option_value;
 
+								// Value checked?
+								$checked = '';
+								if ( in_array( $option_value, $values ) ) {
+									$checked = ' checked="checked"';
+								}
+
+								// Make checkbox with label.
 								$input .= '<div class="ctc-checkbox-multiple-container">';
 								$input .= '	<label for="' . $esc_checkbox_id . '">';
-								$input .= '		<input type="checkbox" ' . $data['common_atts'] . ' id="' . $esc_checkbox_id . '" value="' . esc_attr( $option_value ) . '"' . checked( $option_value, $data['value'], false ) . '/> ' . esc_html( $option_text );
+								$input .= '		<input type="checkbox" ' . $data['common_atts'] . ' id="' . $esc_checkbox_id . '" value="' . esc_attr( $option_value ) . '"' . $checked . '/> ' . esc_html( $option_text );
 								$input .= '	</label>';
 								$input .= '</div>';
 
