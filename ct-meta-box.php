@@ -861,15 +861,15 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Checkbox Multiple
 				case 'checkbox_multiple':
 
-					// Ensure array format.
-					$options = (array) $output;
+					// Get posted values and ensure array format.
+					$posted_values = (array) $output;
 
-					// Sanitize values in array to process as would a single checkbox.
-					$output = array();
-					foreach ( $options as $option_value ) {
+					// Loop array of valid option values to build sanitized array in correct order.
+					$output = array(); // start fresh.
+					foreach ( $this->meta_box['fields'][$key]['options'] as $option_value => $option_text ) {
 
-						// Make sure option is valid (defined in options argument for field).
-						if ( isset( $this->meta_box['fields'][$key]['options'][$option_value] ) ) {
+						// Posted value is valid, add to new array.
+						if ( in_array( $option_value, $posted_values ) ) {
 							$output[] = $option_value;
 						}
 
@@ -877,7 +877,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Encode multiple values as JSON for storage.
 					if ( ! empty( $output ) ) {
-						$output = array_unique( $output ); // just in case.
 						$output = wp_json_encode( $output );
 					} else {
 						$output = ''; // empty string if no data
