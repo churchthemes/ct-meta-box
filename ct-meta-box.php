@@ -349,8 +349,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 			$data['classes'] = implode( ' ', $classes );
 
+			// Name
+			$name = $data['key'];
+			if ( 'checkbox_multiple' === $data['field']['type'] ) {
+				$name .= '[]';
+			}
+
 			// Common attributes
-			$data['common_atts'] = 'name="' . esc_attr( $data['key'] ) . '" class="' . esc_attr( $data['classes'] ) . '"';
+			$data['common_atts'] = 'name="' . esc_attr( $name ) . '" class="' . esc_attr( $data['classes'] ) . '"';
 			if ( ! empty( $data['field']['attributes'] ) ) { // add custom attributes
 				foreach ( $data['field']['attributes'] as $attr_name => $attr_value ) {
 					$data['common_atts'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
@@ -439,7 +445,21 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Checkbox Multiple
 					case 'checkbox_multiple':
 
-						$input  = 'checkbox multiple';
+						if ( ! empty( $data['field']['options'] ) ) {
+
+							foreach ( $data['field']['options'] as $option_value => $option_text ) {
+
+								$esc_checkbox_id = $data['esc_element_id'] . '-' . $option_value;
+
+								$input .= '<div class="ctc-checkbox-multiple-container">';
+								$input .= '	<label for="' . $esc_checkbox_id . '">';
+								$input .= '		<input type="checkbox" ' . $data['common_atts'] . ' id="' . $esc_checkbox_id . '" value="' . esc_attr( $option_value ) . '"' . checked( $option_value, $data['value'], false ) . '/> ' . esc_html( $option_text );
+								$input .= '	</label>';
+								$input .= '</div>';
+
+							}
+
+						}
 
 						break;
 
@@ -831,21 +851,26 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				case 'checkbox_multiple':
 
 					// Ensure array format.
-					$values = (array) $output;
+					$options = (array) $output;
 
 					// Sanitize values in array to process as would a single checkbox.
 					$output = array();
-					foreach ( $values as $k => $v ) {
+					foreach ( $options as $option_value ) {
 
-						// If checked, should always have value of '1'.
-						$output[$k] = ! empty( $v ) ? '1' : '';
+						// Make sure option is valid (defined in options argument for field).
+						if ( isset( $this->meta_box['fields'][$key]['options'][$option_value] ) ) {
+							$output[] = $option_value;
+						}
 
 					}
 
 					// Encode multiple values as JSON for storage.
-					$output = wp_json_encode( $output );
-
-print_r($output);exit;
+					if ( ! empty( $output ) ) {
+						$output = array_unique( $output ); // just in case.
+						$output = wp_json_encode( $output );
+					} else {
+						$output = ''; // empty string if no data
+					}
 
 					break;
 
