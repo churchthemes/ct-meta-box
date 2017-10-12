@@ -102,14 +102,16 @@
 			color: #595959;
 		}
 
-	/* Inline radio option */
+	/* Inline radio or checkbox_multiple option */
 
-	.ctc-radio-inline .ctc-radio-container {
+	.ctc-radio-inline .ctc-radio-container,
+	.ctc-checkbox-multiple-inline .ctc-checkbox-multiple-container {
 		margin-bottom: 2px;
 		display: inline-block;
 	}
 
-	.ctc-radio-inline .ctc-radio-container:not(:last-child) {
+	.ctc-checkbox-multiple-inline .ctc-checkbox-multiple-container:not(:last-child),
+	.ctc-checkbox-multiple-inline .ctc-checkbox-multiple-container:not(:last-child) {
 		margin-right: 11px;
 	}
 
