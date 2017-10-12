@@ -830,6 +830,22 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Checkbox Multiple
 				case 'checkbox_multiple':
 
+					// Ensure array format.
+					$values = (array) $output;
+
+					// Sanitize values in array to process as would a single checkbox.
+					$output = array();
+					foreach ( $values as $k => $v ) {
+
+						// If checked, should always have value of '1'.
+						$output[$k] = ! empty( $v ) ? '1' : '';
+
+					}
+
+					// Encode multiple values as JSON for storage.
+					$output = wp_json_encode( $output );
+
+print_r($output);exit;
 
 					break;
 
