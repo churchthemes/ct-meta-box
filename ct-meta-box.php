@@ -777,18 +777,23 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * @since 0.8.5
 		 * @access public
-		 * @param string $key Field key
+		 * @param string $key Field key.
 		 * @return mixed Sanitized value
 		 */
 		public function sanitize_field_value( $key ) {
 
 			global $post_id, $post, $allowedposttags;
 
-			// Get posted value
+			// Get posted value.
 			$input = isset( $_POST[$key] ) ? $_POST[$key] : '';
 
-			// General sanitization
-			$output = trim( stripslashes( $input ) );
+			// General sanitization.
+			if ( is_array( $input ) ) {
+				$output = array_map( 'stripslashes', $input );
+				$output = array_map( 'trim', $output );
+			} else {
+				$output = stripslashes( $input );
+			}
 
 			// Empty value if specific page templates required but not used
 			if ( ! empty( $output ) && ! empty( $this->meta_box['fields'][$key]['page_templates'] ) && ( ! isset( $_POST['page_template'] ) || ! in_array( $_POST['page_template'], $this->meta_box['fields'][$key]['page_templates'] ) ) ) {
