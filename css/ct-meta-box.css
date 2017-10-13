@@ -110,7 +110,7 @@
 		display: inline-block;
 	}
 
-	.ctc-checkbox-multiple-inline .ctc-checkbox-multiple-container:not(:last-child),
+	.ctc-radio-inline .ctc-radio-container:not(:last-child),
 	.ctc-checkbox-multiple-inline .ctc-checkbox-multiple-container:not(:last-child) {
 		margin-right: 11px;
 	}
