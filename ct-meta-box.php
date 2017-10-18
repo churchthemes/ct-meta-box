@@ -1002,28 +1002,31 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			global $ctmb_styles_enqueued;
 
-			// Styles need not be enqueued for every meta box on a page
+			// Styles need not be enqueued for every meta box on a page.
 			if ( ! empty( $ctmb_styles_enqueued ) ) {
 				return;
 			} else {
 				$ctmb_styles_enqueued = true;
 			}
 
-			// Get current screen
+			// Get current screen.
 			$screen = get_current_screen();
 
-			// Add/edit any post type
-			if ( 'post' == $screen->base ) {
+			// Add/edit any post type.
+			if ( 'post' === $screen->base ) {
 
-				// Always enable thickbox on add/edit post for custom meta upload fields
+				// Always enable thickbox on add/edit post for custom meta upload fields.
 				wp_enqueue_style( 'thickbox' );
 
-				// jQuery Timepicker
-				// https://github.com/jonthornton/jquery-timepicker
-				wp_enqueue_style( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'css/jquery.timepicker.css', false, $this->version ); // bust cache on update
+				// Air Datepicker.
+				wp_enqueue_style( 'air-datepicker', trailingslashit( CTMB_URL ) . 'css/datepicker.min.css', false, $this->version ); // bust cache on update.
 
-				// Meta boxes stylesheet
-				wp_enqueue_style( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'css/ct-meta-box.css', false, $this->version ); // bust cache on update
+				// jQuery Timepicker.
+				// https://github.com/jonthornton/jquery-timepicker
+				wp_enqueue_style( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'css/jquery.timepicker.css', false, $this->version ); // bust cache on update.
+
+				// Meta boxes stylesheet.
+				wp_enqueue_style( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'css/ct-meta-box.css', false, $this->version ); // bust cache on update.
 
 			}
 
@@ -1042,29 +1045,33 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			global $ctmb_scripts_enqueued;
 
-			// Scripts need not be enqueued for every meta box on a page
+			// Scripts need not be enqueued for every meta box on a page.
 			if ( ! empty( $ctmb_scripts_enqueued ) ) {
 				return;
 			} else {
 				$ctmb_scripts_enqueued = true;
 			}
 
-			// Get current screen
+			// Get current screen.
 			$screen = get_current_screen();
 
-			// Add/edit any post type
-			if ( 'post' == $screen->base ) {
+			// Add/edit any post type.
+			if ( 'post' === $screen->base ) {
 
-				// Always enable media-upload and thickbox on add/edit post for custom meta upload fields
+				// Always enable media-upload and thickbox on add/edit post for custom meta upload fields.
 				wp_enqueue_script( 'media-upload' );
 				wp_enqueue_script( 'thickbox' );
 
-				// jQuery Timepicker
-				// https://github.com/jonthornton/jquery-timepicker
-				wp_enqueue_script( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'js/jquery.timepicker.min.js', false, $this->version ); // bust cache on update
+				// Air Datepicker.
+				wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
+				wp_enqueue_script( 'air-datepicker-i18n', trailingslashit( CTMB_URL ) . 'js/i18n/datepicker.en.js', false, $this->version ); // bust cache on update.
 
-				// Meta boxes JavaScript
-				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update
+				// jQuery Timepicker.
+				// https://github.com/jonthornton/jquery-timepicker
+				wp_enqueue_script( 'jquery-timepicker', trailingslashit( CTMB_URL ) . 'js/jquery.timepicker.min.js', false, $this->version ); // bust cache on update.
+
+				// Meta boxes JavaScript.
+				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update.
 
 			}
 
