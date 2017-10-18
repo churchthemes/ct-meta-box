@@ -594,6 +594,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Date Multiple
 					case 'date_multiple':
 
+						// Add space after commas for user-friendliness.
+						// These spaces are removed on saving.
+						$data['esc_value'] = str_replace( ',', ', ', $data['esc_value'] );
+
+						// Input to store comma-separated list of dates in YYYY-mm-dd format.
 						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						break;
