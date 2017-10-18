@@ -82,9 +82,9 @@ jQuery( document ).ready( function( $ ) {
 	// Activate Air Datepicker on appropriate inputs.
 	$( '.ctmb-date_multiple' ).datepicker( {
 		language: 'en',
+		dateFormat: 'yyyy-mm-dd',
 		multipleDates: true,
 		multipleDatesSeparator: ', ',
-		dateFormat: 'yyyy-mm-dd',
 	} );
 
 	/**************************************

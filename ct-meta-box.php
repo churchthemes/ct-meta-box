@@ -977,17 +977,17 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						// Trim.
 						$date = trim( $date );
 
-						// Have date value.
-						if ( $date ) {
+						// Have date value with proper format?
+						if ( $date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date ) ) {
 
 							// Extract month, day, year from YYYY-MM-DD date.
 							list( $y, $m, $d ) = explode( '-', $date );
 
-							// Validate year, month and date (e.g. no February 31 or malformed dates).
-							if ( strlen( $y ) === 4 && strlen( $m ) === 2 && strlen( $d ) === 2 && checkdate( $m, $d, $y ) ) {
+							// Validate year, month and date (e.g. no February 31).
+							if ( checkdate( $m, $d, $y ) ) {
 
 								// Add valid date to array to be made into list.
-								$dates_valid[] = "$y-$m-$d";
+								$valid_dates[] = "$y-$m-$d";
 
 							}
 
@@ -998,7 +998,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Make cleaned list of dates.
 					// Comma-separated list without spaces, having valid dates in YYYY-mm-dd format.
 					if ( $valid_dates ) {
-						$output = implode( ',', $valid_dates );
+						$valid_dates = array_unique( $valid_dates ); // no duplicate dates.
+						$output = implode( ',', $valid_dates ); // array to list.
+					} else { // if no valid dates, save empty.
+						$output = '';
 					}
 
 					break;
