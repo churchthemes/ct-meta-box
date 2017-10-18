@@ -336,6 +336,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'number'			=> 'small-text',
 				'range'				=> '',
 				'date'				=> '',
+				'date_multiple'		=> 'datepicker-here', // Air Datepicker class.
 				'time'				=> 'regular-text',
 
 			);
@@ -590,6 +591,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						break;
 
+					// Date Multiple
+					case 'date_multiple':
+
+						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+
+						break;
+
 					// Time
 					// HTML5 <time> not supported by major browsers
 					// Using this instead (like Google Calendar): https://github.com/jonthornton/jquery-timepicker
@@ -634,7 +642,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						<?php
 						if (
 							! empty( $data['field']['after_input'] )
-							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'range', 'upload', 'url', 'date', 'time' ) ) // specific fields only
+							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'range', 'upload', 'url', 'date', 'date_multiple', 'time' ) ) // specific fields only
 						) :
 						?>
 							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
@@ -956,7 +964,46 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					break;
 
-				// Time
+				// Date Multiple.
+				case 'date_multiple':
+
+					// Make array out of list of dates.
+					$dates = explode( ',', $output );
+
+					// Make validated list of dates.
+					$valid_dates = array();
+					foreach ( $dates as $date ) {
+
+						// Trim.
+						$date = trim( $date );
+
+						// Have date value.
+						if ( $date ) {
+
+							// Extract month, day, year from YYYY-MM-DD date.
+							list( $y, $m, $d ) = explode( '-', $date );
+
+							// Validate year, month and date (e.g. no February 31 or malformed dates).
+							if ( strlen( $y ) === 4 && strlen( $m ) === 2 && strlen( $d ) === 2 && checkdate( $m, $d, $y ) ) {
+
+								// Add valid date to array to be made into list.
+								$dates_valid[] = "$y-$m-$d";
+
+							}
+
+						}
+
+					}
+
+					// Make cleaned list of dates.
+					// Comma-separated list without spaces, having valid dates in YYYY-mm-dd format.
+					if ( $valid_dates ) {
+						$output = implode( ',', $valid_dates );
+					}
+
+					break;
+
+				// Time.
 				case 'time':
 
 					// Is time valid?
