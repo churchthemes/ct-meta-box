@@ -594,12 +594,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Date Multiple
 					case 'date_multiple':
 
-						// Add space after commas for user-friendliness.
-						// These spaces are removed on saving.
-						$data['esc_value'] = str_replace( ',', ', ', $data['esc_value'] );
-
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
 						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+
+						// Element to show localized dates in.
+						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted"></div>'; // JavaScript will fill this on load/change.
 
 						break;
 
@@ -979,7 +978,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					$valid_dates = array();
 					foreach ( $dates as $date ) {
 
-						// Trim.
+						// Trim, just in case.
 						$date = trim( $date );
 
 						// Have date value with proper format?
@@ -1127,6 +1126,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Meta boxes JavaScript.
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update.
+				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array( // data to use in JS.
+					'date_format' => get_option( 'date_format' ),
+				) );
 
 			}
 
