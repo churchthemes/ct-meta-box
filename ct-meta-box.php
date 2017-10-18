@@ -336,7 +336,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'number'			=> 'small-text',
 				'range'				=> '',
 				'date'				=> '',
-				'date_multiple'		=> 'datepicker-here', // Air Datepicker class.
+				'date_multiple'		=> '',
 				'time'				=> 'regular-text',
 
 			);

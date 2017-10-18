@@ -76,6 +76,18 @@ jQuery( document ).ready( function( $ ) {
 	$( '.ctmb-date select, .ctmb-date input' ).bind( 'change keyup', ctmb_date_changed );
 
 	/**************************************
+	 * DATEPICKER
+	 **************************************/
+
+	// Activate Air Datepicker on appropriate inputs.
+	$( '.ctmb-date_multiple' ).datepicker( {
+		language: 'en',
+		multipleDates: true,
+		multipleDatesSeparator: ', ',
+		dateFormat: 'yyyy-mm-dd',
+	} );
+
+	/**************************************
 	 * TIMEPICKER
 	 **************************************/
 
