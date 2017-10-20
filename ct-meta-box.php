@@ -1229,7 +1229,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$date_format = get_option( 'date_format' );
 
 			// Get selected dates.
-			$dates = $_POST['dates'];
+			$dates = sanitize_text_field( $_POST['dates'] );
 
 			// Have dates.
 			if ( $dates ) {
