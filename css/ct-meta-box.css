@@ -90,7 +90,11 @@
 		}
 
 		.ctmb-date_multiple-formatted:not(:empty) {
-			padding-top: 3px;
+			padding-top: 3px; /* move dates down when present to be in line with label */
+		}
+
+		.ctmb-date_multiple-formatted:empty {
+			margin-top: -8px; /* shift up so button is in line with label */
 		}
 
 			.ctmb-localized-date {
