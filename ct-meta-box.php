@@ -1211,7 +1211,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Only if is AJAX request.
 			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				exit;;
+				exit;
 			}
 
 			// Check nonce.
