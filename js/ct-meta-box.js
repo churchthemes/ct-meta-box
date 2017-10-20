@@ -110,7 +110,15 @@ jQuery( document ).ready( function( $ ) {
 		// Pre-select initial dates from first load (make calendar reflect input).
 		var initial_dates = $( this ).val().split( ',' );
 		$.each( initial_dates, function( index, date ) {
+
+			// Replace - with / (e.g. 2017-01-01 to 2017/01/01)
+			// Keeps Date object from making date off by one day due to timezone issue
+			// https://stackoverflow.com/a/31732581
+			var date = date.replace( /-/g, '\/' );
+
+			// Set the date in the calendar (also re-populates the input).
 			$datepicker.selectDate( new Date( date ) );
+
 		} );
 
 	} );

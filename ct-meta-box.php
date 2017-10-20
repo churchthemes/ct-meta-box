@@ -583,20 +583,20 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						}
 						$input .= '</select>';
 
-						// Day
+						// Day.
 						$input .= ' <input type="number" name="' . esc_attr( $data['key'] ) . '-day" id="' . $data['esc_element_id'] . '-day" min="1" max="31" value="' . esc_attr( $day ) . '" class="ctmb-date-day">';
 
-						// Year
-						// Set the max year to 2037 because that's when timestamps will die
-						// This is a precaution to avoid unexpected results
+						// Year.
+						// Set the max year to 2037 because that's when timestamps will die.
+						// This is a precaution to avoid unexpected results.
 						$input .= ', <input type="number" name="' . esc_attr( $data['key'] ) . '-year" id="' . $data['esc_element_id'] . '-year" min="2000" max="2037" value="' . esc_attr( $year ) . '" class="ctmb-date-year">';
 
-						// Container end
+						// Container end.
 						$input .= '</div>';
 
 						break;
 
-					// Date Multiple
+					// Date Multiple.
 					case 'date_multiple':
 
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
@@ -608,9 +608,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						break;
 
-					// Time
-					// HTML5 <time> not supported by major browsers
-					// Using this instead (like Google Calendar): https://github.com/jonthornton/jquery-timepicker
+					// Time.
+					// HTML5 <time> not supported by major browsers.
+					// Using this instead (like Google Calendar): https://github.com/jonthornton/jquery-timepicker.
 					case 'time':
 
 						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
@@ -625,8 +625,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			 * Field Container
 			 */
 
-			// Output field
-			if ( ! empty( $input ) ) { // don't render if type invalid
+			// Output field.
+			if ( ! empty( $input ) ) { // don't render if type invalid.
 
 				?>
 				<div id="ctmb-field-<?php echo esc_attr( $data['key'] ); ?>" class="<?php echo esc_attr( $data['field_class'] ); ?>"<?php echo $data['field_attributes']; ?>>
