@@ -1247,6 +1247,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Trim just in case.
 					$date = trim( $date );
 
+					// Make sure in YYYY-mm-dd format and date is valid.
+					// Keep strotime from creating a wrong timestamp from an invalid date.
+					if ( ! $this->valid_date( $date ) ) {
+						continue;
+					}
+
 					// Convert to timestamp.
 					$ts = strtotime( $date );
 
@@ -1332,8 +1338,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function valid_date( $date ) {
 
 			$valid = false;
-
-			if ( $date )
 
 			// Have date value with proper format of YYYY-mm-dd.
 			if ( $date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date ) ) {
