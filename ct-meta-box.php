@@ -1294,7 +1294,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					$date_localized = date_i18n( $date_format, $ts );
 
 					// Add icon for removing date.
-					$date_localized .= '<a href="#" class="ctmb-remove-date dashicons dashicons-no-alt"></a>';
+					$date_localized .= '<a href="#" class="ctmb-remove-date dashicons dashicons-no-alt" data-ctmb-date="' . esc_attr( $date ) . '"></a>';
 
 					// Format/localize and add to array.
 					$dates_localized[] = '<span class="ctmb-localized-date">' . $date_localized . '</span>';
