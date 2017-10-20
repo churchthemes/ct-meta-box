@@ -606,8 +606,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . $localized_dates . '</div>'; // JavaScript will fill this on load/change.
 
 						// Button for selecting dates.
+						$button = isset( $data['field']['date_button'] ) ? $data['field']['date_button'] : '';
 						$input .= '<div id="' . $data['esc_element_id'] . '-button-container" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button-container">';
-						$input .= '	<a href="#" id="' . $data['esc_element_id'] . '-button" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button button">' . __( 'Choose Dates', '' ) . '</a>';
+						$input .= '	<a href="#" id="' . $data['esc_element_id'] . '-button" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button button">' . esc_html( $button ) . '</a>';
 						$input .= '</div>';
 
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
