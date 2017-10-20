@@ -1208,10 +1208,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 */
 		public function localize_dates() {
 
-			// Nonce?
+			// Only if is AJAX request.
+			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+				exit;;
+			}
 
+			// Check nonce.
+			// TO DO
+			//check_ajax_referer( '', '' );
 
-			// Check user capabilities add/edit
+			// Check user capabilities add/edit.
 			if ( ! current_user_can( 'edit_posts' ) ) {
 				exit;
 			}
