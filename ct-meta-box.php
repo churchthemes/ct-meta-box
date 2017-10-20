@@ -603,7 +603,8 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						// Element to show localized dates in.
-						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted"></div>'; // JavaScript will fill this on load/change.
+						$localized_dates = $this->localize_dates( $data['value'] );
+						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . esc_html( $localized_dates ) . '</div>'; // JavaScript will fill this on load/change.
 
 						break;
 
