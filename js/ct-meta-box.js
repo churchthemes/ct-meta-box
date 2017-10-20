@@ -96,8 +96,6 @@ jQuery( document ).ready( function( $ ) {
 				$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).text( dates_formatted ); // add formatted dates to element for user-friendly display..
 			} );
 
-			// Also run this on load, but get from the ctmb-date_multiple element
-
         }
 
 	} );
