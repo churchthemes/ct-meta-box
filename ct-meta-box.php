@@ -599,8 +599,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Date Multiple.
 					case 'date_multiple':
 
+						$input = '';
+
+						// Button for selecting dates.
+						$input .= '<a href="#" id="' . $data['esc_element_id'] . '-button" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button button">' . __( 'Choose Dates', '' ) . '</a>';
+
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
-						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
