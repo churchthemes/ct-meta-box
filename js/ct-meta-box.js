@@ -87,30 +87,15 @@ jQuery( document ).ready( function( $ ) {
 		multipleDatesSeparator: ',',
 		onSelect: function ( fd, d, picker ) { // date(s) were changed.
 
-			// Get date(s).
-			var dates = fd;
-			dates = dates.split( ',' );
-
-			// Loop dates to format/localize and concatenate.
-			var dates_formatted = '';
-			$( dates ).each( function( index, date ) {
-
-				date_formatted = date;
-
-				if ( dates_formatted ) {
-					dates_formatted += ', ';
-				}
-
-				dates_formatted += date_formatted;
-
+			// Get localized dates via AJAX.
+			$.post( ctmb.ajax_url, {
+				'action': 'localize_dates',
+				'dates': fd,
+			}, function( dates_formatted ) {
+				$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).html( dates_formatted ); // add formatted dates to element for user-friendly display..
 			} );
 
-			// Add formatted dates to element for user-friendly display.
-			var formatted_element_id = '#' + $( picker.el ).attr( 'id' ) + '-formatted';
-			$( formatted_element_id ).html( dates_formatted );
-
 			// Also run this on load, but get from the ctmb-date_multiple element
-
 
         }
 

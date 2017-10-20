@@ -13,10 +13,12 @@
  * @license   GPLv2 or later
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-// Class may be used in both theme and plugin(s)
+// Class may be used in both theme and plugin(s).
 if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 	/**
@@ -47,19 +49,22 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * @since 0.8.5
 		 * @access public
-		 * @param array $meta_box Configuration for meta box and its fields
+		 * @param array $meta_box Configuration for meta box and its fields.
 		 */
 		public function __construct( $meta_box ) {
 
-			// Version - used in cache busting
+			// Version - used in cache busting.
 			$this->version = '2.1.1';
 
-			// Prepare config
+			// Prepare config.
 			$this->prepare( $meta_box );
 
-			// Setup meta box
-			add_action( 'load-post-new.php', array( &$this, 'setup' ) ); // setup meta boxes on add
-			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit
+			// Setup meta box.
+			add_action( 'load-post-new.php', array( &$this, 'setup' ) ); // setup meta boxes on add.
+			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit.
+
+			// Localize dates via AJAX.
+			add_action( 'wp_ajax_localize_dates', array( &$this, 'localize_dates' ) );
 
 		}
 
@@ -70,40 +75,40 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * @since 0.8.5
 		 * @access public
-		 * @param array $meta_box Configuration for meta box and its fields
+		 * @param array $meta_box Configuration for meta box and its fields.
 		 */
 		public function prepare( $meta_box ) {
 
-			// Filter meta box data (before anything)
+			// Filter meta box data (before anything).
 			$meta_box = apply_filters( 'ctmb_meta_box', $meta_box );
-			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID
+			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID.
 				$meta_box = apply_filters( 'ctmb_meta_box-' . $meta_box['id'], $meta_box );
 			}
 
-			// Filter fields by meta box ID
-			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID
+			// Filter fields by meta box ID.
+			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID.
 				$meta_box['fields'] = apply_filters( 'ctmb_fields-' . $meta_box['id'], $meta_box['fields'] );
 			}
 
-			// Get fields for looping
+			// Get fields for looping.
 			$fields = $meta_box['fields'];
 
-			// Fill array of visible fields with all by default
+			// Fill array of visible fields with all by default.
 			$visible_fields = array();
 			foreach ( $fields as $key => $field ) {
 				$visible_fields[] = $key;
 			}
 
-			// Let themes/plugins set explicit visibility for fields of specific post type
+			// Let themes/plugins set explicit visibility for fields of specific post type.
 			$visible_fields = apply_filters( 'ctmb_visible_fields-' . $meta_box['post_type'], $visible_fields, $meta_box['post_type'] );
 
-			// Let themes/plugins override specific data for field of specific post type
-			$field_overrides = apply_filters( 'ctmb_field_overrides-' . $meta_box['post_type'], array(), $meta_box['post_type'] ); // by default no overrides
+			// Let themes/plugins override specific data for field of specific post type.
+			$field_overrides = apply_filters( 'ctmb_field_overrides-' . $meta_box['post_type'], array(), $meta_box['post_type'] ); // by default no overrides.
 
-			// Loop fields to modify them with filtered data
+			// Loop fields to modify them with filtered data.
 			foreach ( $fields as $key => $field ) {
 
-				// Selectively override field data based on filtered array
+				// Selectively override field data based on filtered array.
 				if ( ! empty( $field_overrides[$key] ) && is_array( $field_overrides[$key] ) ) {
 					$meta_box['fields'][$key] = array_merge( $field, $field_overrides[$key] ); // merge filtered in data over top existing data
 				}
@@ -1126,9 +1131,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Meta boxes JavaScript.
 				wp_enqueue_script( 'ctmb-meta-boxes', trailingslashit( CTMB_URL ) . 'js/ct-meta-box.js', false, $this->version ); // bust cache on update.
-				wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array( // data to use in JS.
-					'date_format' => get_option( 'date_format' ),
-				) );
 
 			}
 
@@ -1169,8 +1171,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Data to pass
 					wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
-						'week_days'		=> $this->week_days(), // to show translated week day date fields
-						'time_format'	=> $time_format, // time format from Settings > General
+						'ajax_url'      => admin_url( 'admin-ajax.php' ),
+						'time_format'   => $time_format, // time format from Settings > General
+						'week_days'     => $this->week_days(), // to show translated week day date fields
 					) );
 
 					// Make sure this is done only once (on first meta box)
@@ -1190,6 +1193,72 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				}
 
 			}
+
+		}
+
+		/**
+		 * Localize dates AJAX
+		 *
+		 * date and date_multiple fields send YYYY-mm-dd format to this method via AJAX.
+		 * This method outputs the localized dates using the site's date_format setting.
+		 * ct-meta-box.js then shows the localized/formatted dates for the user to see.
+		 *
+		 * @since 2.2
+		 * @access public
+		 */
+		public function localize_dates() {
+
+			// Nonce?
+
+
+			// Check user capabilities add/edit
+			if ( ! current_user_can( 'edit_posts' ) ) {
+				exit;
+			}
+
+			// Output nothing if no dates.
+			$dates_formatted = '';
+
+			// Get date format.
+			$date_format = get_option( 'date_format' );
+
+			// Get selected dates.
+			$dates = $_POST['dates'];
+
+			// Have dates.
+			if ( $dates ) {
+
+				// Convert to array.
+				$dates = explode( ',', $dates );
+
+				// Sort low to high.
+				asort( $dates );
+
+				// Add formatted dates to array.
+				$dates_formatted = array();
+				foreach ( $dates as $date ) {
+
+					// Trim just in case.
+					$date = trim( $date );
+
+					// Convert to timestamp.
+					$ts = strtotime( $date );
+
+					// Format/localize and add to array.
+					$dates_formatted[] = date_i18n( $date_format, $ts );
+
+				}
+
+			}
+
+			// Concatenate into comma-separated list of dates.
+			$dates_formatted = implode( ', ', $dates_formatted );
+
+			// Send friendly dates to client-side for adding to element.
+			echo $dates_formatted;
+
+			// Done.
+			exit;
 
 		}
 
