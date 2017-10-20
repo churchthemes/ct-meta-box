@@ -1222,14 +1222,37 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				exit;
 			}
 
-			// Output nothing if no dates.
-			$dates_formatted = '';
+			// Get selected dates.
+			$dates = sanitize_text_field( $_POST['dates'] );
+
+			// Convert list of YYYY-mm-dd formatted dates into list of localize dates using date_format setting.
+			$dates_localized = $this->localize_dates( $dates );
+
+			// Send friendly dates to client-side for adding to element.
+			echo apply_filters( 'localize_dates_ajax', $dates_localized );
+
+			// Done.
+			exit;
+
+		}
+
+		/**
+		 * Localize dates
+		 *
+		 * Convert a comma-separated list of dates in YYYY-mm-dd into localized list of dates
+		 * using the website's date_format setting.
+		 *
+		 * @since 2.2
+		 * @access public
+		 * @param string $dates Comma-separated list of dates in YYYY-mm-dd format.
+		 */
+		public function localize_dates( $dates ) {
+
+			// Empty if no valid dates.
+			$dates_localized = '';
 
 			// Get date format.
 			$date_format = get_option( 'date_format' );
-
-			// Get selected dates.
-			$dates = sanitize_text_field( $_POST['dates'] );
 
 			// Have dates.
 			if ( $dates ) {
@@ -1241,7 +1264,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				asort( $dates );
 
 				// Add formatted dates to array.
-				$dates_formatted = array();
+				$dates_localized = array();
 				foreach ( $dates as $date ) {
 
 					// Trim just in case.
@@ -1257,20 +1280,17 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					$ts = strtotime( $date );
 
 					// Format/localize and add to array.
-					$dates_formatted[] = date_i18n( $date_format, $ts );
+					$dates_localized[] = date_i18n( $date_format, $ts );
 
 				}
 
 			}
 
 			// Concatenate into comma-separated list of dates.
-			$dates_formatted = implode( ', ', $dates_formatted );
+			$dates_localized = implode( ', ', $dates_localized );
 
 			// Send friendly dates to client-side for adding to element.
-			echo $dates_formatted;
-
-			// Done.
-			exit;
+			return apply_filters( 'ctmb_localize_dates', $dates_localized, $dates );
 
 		}
 
@@ -1330,7 +1350,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 *
 		 * This is a helpful check to run before using strtotime.
 		 *
-		 * @since 2.0
+		 * @since 2.2
 		 * @access public
 		 * @param string $date Date in YYYY-mm-dd format (ie. 2017-01-20)
 		 * @return bool True if date is valid and in YYYY-mm-dd format
