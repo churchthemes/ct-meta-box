@@ -89,7 +89,7 @@
 			display: none;
 		}
 
-		.ctmb-date_multiple-formatted {
+		.ctmb-date_multiple-formatted:not(:empty) {
 			padding-top: 3px;
 		}
 

@@ -117,14 +117,30 @@ jQuery( document ).ready( function( $ ) {
 		} ).data( 'datepicker' );
 
 		// Pre-select initial dates from first load (make calendar reflect input).
-		var initial_dates = $( this ).val().split( ',' ); // convert comma-separated list into array.
-		var initial_date_objects = []; // array to add date objects to.
-		var localize_dates_ajax_disabled = true; // temporarily disable localize_dates_ajax to avoid problems / extra resource usage.
-		$.each( initial_dates, function( index, date ) { // loop dates to add objects to array.
-			initial_date_objects.push( new Date( date.replace( /-/g, '\/' ) ) ); // Replace - with / (e.g. 2017-01-01 to 2017/01/01) to prevent his issue: https://stackoverflow.com/a/31732581
-		} );
-		$datepicker.selectDate( initial_date_objects ); // Set the date in the calendar (also re-populates the input).
-		localize_dates_ajax_disabled = false; // re-enable localize_dates_ajax
+		var initial_dates = $( this ).val();
+		if ( initial_dates.length ) {
+
+			// Convert comma-separated list into array.
+			initial_dates = initial_dates.split( ',' );
+
+			// Array to add date objects to.
+			var initial_date_objects = [];
+
+			// Loop dates to add objects to array.
+			$.each( initial_dates, function( index, date ) {
+					initial_date_objects.push( new Date( date.replace( /-/g, '\/' ) ) ); // Replace - with / (e.g. 2017-01-01 to 2017/01/01) to prevent his issue: https://stackoverflow.com/a/31732581
+			} );
+
+			// Temporarily disable localize_dates_ajax to avoid problems / extra resource usage.
+			var localize_dates_ajax_disabled = true;
+
+			// Set the date in the calendar (also re-populates the input).
+			$datepicker.selectDate( initial_date_objects );
+
+			// Re-enable localize_dates_ajax
+			localize_dates_ajax_disabled = false;
+
+		}
 
 		// Make button show picker.
 		$( $field_container ).on( 'click', '.button', function( e ) {
