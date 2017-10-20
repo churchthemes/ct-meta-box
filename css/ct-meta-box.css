@@ -93,6 +93,24 @@
 			padding-top: 3px;
 		}
 
+			.ctmb-localized-date {
+				display: inline-block;
+				padding-right: 8px;
+				white-space: nowrap;
+			}
+
+			.ctmb-remove-date {
+				display: inline-block;
+				padding-left: 0;
+				font-size: 1.45em;
+				position: relative;
+				top: 0.04em;
+			}
+
+				.ctmb-remove-date:not(:hover) {
+					color: #999;
+				}
+
 		.ctmb-date_multiple-button-container {
 			margin: 10px 0;
 		}
@@ -101,6 +119,8 @@
 			display: none;
 			margin: 15px 0 7px 0;
 		}
+
+
 
 		/* Upload */
 

@@ -603,7 +603,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
-						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . esc_html( $localized_dates ) . '</div>'; // JavaScript will fill this on load/change.
+						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . $localized_dates . '</div>'; // JavaScript will fill this on load/change.
 
 						// Button for selecting dates.
 						$input .= '<div id="' . $data['esc_element_id'] . '-button-container" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button-container">';
@@ -1290,13 +1290,19 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Convert to timestamp.
 					$ts = strtotime( $date );
 
+					// Localized date.
+					$date_localized = date_i18n( $date_format, $ts );
+
+					// Add icon for removing date.
+					$date_localized .= '<a href="#" class="ctmb-remove-date dashicons dashicons-no-alt"></a>';
+
 					// Format/localize and add to array.
-					$dates_localized[] = date_i18n( $date_format, $ts );
+					$dates_localized[] = '<span class="ctmb-localized-date">' . $date_localized . '</span>';
 
 				}
 
 				// Concatenate into comma-separated list of dates.
-				$dates_localized = implode( ', ', $dates_localized );
+				$dates_localized = implode( '', $dates_localized );
 
 			}
 

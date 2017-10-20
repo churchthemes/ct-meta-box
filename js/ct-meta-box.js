@@ -107,7 +107,7 @@ jQuery( document ).ready( function( $ ) {
 						'nonce' : ctmb.localize_dates_nonce,
 						'dates':  fd,
 					}, function( dates_formatted ) {
-						$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).text( dates_formatted ); // add formatted dates to element for user-friendly display..
+						$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).html( dates_formatted ); // add formatted dates to element for user-friendly display..
 					} );
 
 				}
