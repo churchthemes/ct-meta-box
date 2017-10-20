@@ -601,15 +601,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						$input = '';
 
-						// Button for selecting dates.
-						$input .= '<a href="#" id="' . $data['esc_element_id'] . '-button" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button button">' . __( 'Choose Dates', '' ) . '</a>';
-
-						// Input to store comma-separated list of dates in YYYY-mm-dd format.
-						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
-
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
 						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . esc_html( $localized_dates ) . '</div>'; // JavaScript will fill this on load/change.
+
+						// Button for selecting dates.
+						$input .= '<div id="' . $data['esc_element_id'] . '-button-container" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button-container">';
+						$input .= '	<a href="#" id="' . $data['esc_element_id'] . '-button" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-button button">' . __( 'Choose Dates', '' ) . '</a>';
+						$input .= '</div>';
+
+						// Input to store comma-separated list of dates in YYYY-mm-dd format.
+						// JavaScript hides this since element above shows friendly date list.
+						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						break;
 

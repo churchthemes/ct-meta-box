@@ -83,6 +83,20 @@
 				width: 60px;
 			}
 
+		/* Date Multiple */
+
+		.ctmb-date_multiple { /* hide input for collecting dates; user sees formatted dates instead */
+			display: none;
+		}
+
+		.ctmb-date_multiple-formatted {
+			margin-top: 0;
+		}
+
+		.ctmb-field-type-date_multiple .datepicker-inline { /* hide datepicker until click button */
+			display: none;
+		}
+
 		/* Upload */
 
 		.ctmb-upload,

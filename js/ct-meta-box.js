@@ -82,6 +82,9 @@ jQuery( document ).ready( function( $ ) {
 	// Loop elements to use Air Datepicker on.
 	$( '.ctmb-date_multiple' ).each( function() {
 
+		// Field container.
+		var $field_container = $( this ).parents( '.ctmb-field' );
+
 		// Activate Air Datepicker.
 		var $datepicker = $( this ).datepicker( {
 
@@ -90,6 +93,7 @@ jQuery( document ).ready( function( $ ) {
 			dateFormat: 'yyyy-mm-dd',
 			multipleDates: true,
 			multipleDatesSeparator: ',',
+			inline: true,
 
 			// Date selected.
 			onSelect: function( fd, d, picker ) { // date(s) were changed.
@@ -118,8 +122,15 @@ jQuery( document ).ready( function( $ ) {
 			// Prevent click from continuing.
 			e.preventDefault();
 
-			// Show calendar.
-			$datepicker.show();
+			// Open if calendar not already open.
+			if ( ! $( '.datepicker-inline', $field_container ).is( ':visible' ) ) {
+				$( '.datepicker-inline', $field_container ).show();
+			}
+
+			// Close if calendar is already open.
+			else {
+				$( '.datepicker-inline', $field_container ).hide();
+			}
 
 		} );
 
