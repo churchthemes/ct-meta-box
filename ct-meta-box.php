@@ -64,7 +64,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			add_action( 'load-post.php', array( &$this, 'setup' ) ); // setup meta boxes on edit.
 
 			// Localize dates via AJAX.
-			add_action( 'wp_ajax_localize_dates', array( &$this, 'localize_dates' ) );
+			add_action( 'wp_ajax_localize_dates_ajax', array( &$this, 'localize_dates_ajax' ) );
 
 		}
 
@@ -1207,7 +1207,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		 * @since 2.2
 		 * @access public
 		 */
-		public function localize_dates() {
+		public function localize_dates_ajax() {
 
 			// Only if is AJAX request.
 			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {

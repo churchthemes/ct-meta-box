@@ -89,7 +89,7 @@ jQuery( document ).ready( function( $ ) {
 
 			// Get localized dates via AJAX.
 			$.post( ctmb.ajax_url, {
-				'action': 'localize_dates',
+				'action': 'localize_dates_ajax',
 				'nonce' : ctmb.localize_dates_nonce,
 				'dates':  fd,
 			}, function( dates_formatted ) {
