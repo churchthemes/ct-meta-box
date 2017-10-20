@@ -1264,8 +1264,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Sort low to high.
 				asort( $dates );
 
-				// Add formatted dates to array.
+				// Array to add dates to.
 				$dates_localized = array();
+
+				// Add formatted dates to array.
 				foreach ( $dates as $date ) {
 
 					// Trim just in case.
@@ -1285,10 +1287,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				}
 
-			}
+				// Concatenate into comma-separated list of dates.
+				$dates_localized = implode( ', ', $dates_localized );
 
-			// Concatenate into comma-separated list of dates.
-			$dates_localized = implode( ', ', $dates_localized );
+			}
 
 			// Send friendly dates to client-side for adding to element.
 			return apply_filters( 'ctmb_localize_dates', $dates_localized, $dates );

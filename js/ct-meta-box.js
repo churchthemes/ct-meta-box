@@ -79,24 +79,39 @@ jQuery( document ).ready( function( $ ) {
 	 * DATEPICKER
 	 **************************************/
 
-	// Activate Air Datepicker on appropriate inputs.
-	$( '.ctmb-date_multiple' ).datepicker( {
-		language: 'en',
-		dateFormat: 'yyyy-mm-dd',
-		multipleDates: true,
-		multipleDatesSeparator: ',',
-		onSelect: function ( fd, d, picker ) { // date(s) were changed.
+	// Loop elements to use Air Datepicker on.
+	$( '.ctmb-date_multiple' ).each( function() {
 
-			// Get localized dates via AJAX.
-			$.post( ctmb.ajax_url, {
-				'action': 'localize_dates_ajax',
-				'nonce' : ctmb.localize_dates_nonce,
-				'dates':  fd,
-			}, function( dates_formatted ) {
-				$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).text( dates_formatted ); // add formatted dates to element for user-friendly display..
-			} );
+		// Activate Air Datepicker.
+		var $datepicker = $( this ).datepicker( {
 
-        }
+			// Options.
+			language: 'en',
+			dateFormat: 'yyyy-mm-dd',
+			multipleDates: true,
+			multipleDatesSeparator: ',',
+
+			// Date selected.
+			onSelect: function( fd, d, picker ) { // date(s) were changed.
+
+				// Get localized dates via AJAX.
+				$.post( ctmb.ajax_url, {
+					'action': 'localize_dates_ajax',
+					'nonce' : ctmb.localize_dates_nonce,
+					'dates':  fd,
+				}, function( dates_formatted ) {
+					$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).text( dates_formatted ); // add formatted dates to element for user-friendly display..
+				} );
+
+	        }
+
+		} ).data( 'datepicker' );
+
+		// Pre-select initial dates from first load (make calendar reflect input).
+		var initial_dates = $( this ).val().split( ',' );
+		$.each( initial_dates, function( index, date ) {
+			$datepicker.selectDate( new Date( date ) );
+		} );
 
 	} );
 
