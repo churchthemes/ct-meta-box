@@ -1171,9 +1171,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Data to pass
 					wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
-						'ajax_url'      => admin_url( 'admin-ajax.php' ),
-						'time_format'   => $time_format, // time format from Settings > General
-						'week_days'     => $this->week_days(), // to show translated week day date fields
+						'ajax_url'             => admin_url( 'admin-ajax.php' ),
+						'localize_dates_nonce' => wp_create_nonce( 'ctmb_localize_dates' ),
+						'time_format'          => $time_format, // time format from Settings > General
+						'week_days'            => $this->week_days(), // to show translated week day date fields
 					) );
 
 					// Make sure this is done only once (on first meta box)
@@ -1214,8 +1215,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Check nonce.
-			// TO DO
-			//check_ajax_referer( '', '' );
+			check_ajax_referer( 'ctmb_localize_dates', 'nonce' );
 
 			// Check user capabilities add/edit.
 			if ( ! current_user_can( 'edit_posts' ) ) {
