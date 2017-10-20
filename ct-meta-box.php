@@ -1319,6 +1319,39 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 		}
 
+		/**
+		 * Validate YYYY-mm-dd date format.
+		 *
+		 * This is a helpful check to run before using strtotime.
+		 *
+		 * @since 2.0
+		 * @access public
+		 * @param string $date Date in YYYY-mm-dd format (ie. 2017-01-20)
+		 * @return bool True if date is valid and in YYYY-mm-dd format
+		 */
+		public function valid_date( $date ) {
+
+			$valid = false;
+
+			if ( $date )
+
+			// Have date value with proper format of YYYY-mm-dd.
+			if ( $date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date ) ) {
+
+				// Extract month, day, year from YYYY-mm-dd date.
+				list( $y, $m, $d ) = explode( '-', $date );
+
+				// Validate year, month and date (e.g. no February 31).
+				if ( checkdate( $m, $d, $y ) ) {
+					$valid = true;
+				}
+
+			}
+
+			return $valid;
+
+		}
+
 	}
 
 }
