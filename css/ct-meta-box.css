@@ -182,7 +182,7 @@
 }
 
 .datepicker--day-name {
-	font-size: 0.85em;
+	font-size: 0.9em;
 	font-weight: bold;
 	color: inherit;
 }
@@ -190,6 +190,10 @@
 .datepicker--nav-title {
 	font-size: 1.05em;
 	font-weight: bold;
+}
+
+.datepicker--cell {
+  height: 28px;
 }
 
 .datepicker--time-row input[type='range']:focus::-webkit-slider-thumb,
