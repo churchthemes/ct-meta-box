@@ -80,14 +80,14 @@ jQuery( document ).ready( function( $ ) {
 	 **************************************/
 
 	// Loop elements to use Air Datepicker on.
-	$( '.ctmb-date_multiple' ).each( function() {
+	$( '.ctmb-date' ).each( function() {
 
 		// Field container.
 		var $field_container = $( this ).parents( '.ctmb-field' );
 
 		// Localization.
 		$.fn.datepicker.language['dynamic'] = ctmb.datepicker_language;
-console.log($.fn.datepicker.language['dynamic']);
+
 		// Activate Air Datepicker.
 		var $datepicker = $( this ).datepicker( {
 

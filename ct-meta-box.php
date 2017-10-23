@@ -341,7 +341,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				'number'			=> 'small-text',
 				'range'				=> '',
 				'date'				=> '',
-				'date_multiple'		=> '',
 				'time'				=> 'regular-text',
 
 			);
@@ -557,49 +556,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						break;
 
-					// Date
-					// (formatted like WordPress post date so that it works *easily* with any language - unlike jQuery UI Datepicker)
+					// Date(s).
 					case 'date':
 
-						// Extract month, day, year from saved date (YYYY-MM-DD)
-						$month = '';
-						$day = '';
-						$year = '';
-						if ( ! empty( $data['value'] ) ) {
-							list( $year, $month, $day ) = explode( '-', $data['value'] );
-							$day = ltrim( $day, '0' ); // remove 0 padding from left
-						}
-
-						// Container start
-						$input .= '<div class="ctmb-date">';
-
-						// Month
-						$input .= '<select name="' . esc_attr( $data['key'] ) . '-month" id="' . $data['esc_element_id'] . '-month" class="ctmb-date-month">';
-						$input .= '<option value=""></option>';
-						for ( $i = 1; $i <= 12; $i++ ) {
-							$month_num = str_pad( $i, 2, '0', STR_PAD_LEFT );
-							$month_name = $wp_locale->get_month( $i );
-							$input .= '<option value="' . esc_attr( $month_num ) . '" ' . selected( $month, $month_num, false ) . '>' . esc_html( $month_name ) . '</option>';
-						}
-						$input .= '</select>';
-
-						// Day.
-						$input .= ' <input type="number" name="' . esc_attr( $data['key'] ) . '-day" id="' . $data['esc_element_id'] . '-day" min="1" max="31" value="' . esc_attr( $day ) . '" class="ctmb-date-day">';
-
-						// Year.
-						// Set the max year to 2037 because that's when timestamps will die.
-						// This is a precaution to avoid unexpected results.
-						$input .= ', <input type="number" name="' . esc_attr( $data['key'] ) . '-year" id="' . $data['esc_element_id'] . '-year" min="2000" max="2037" value="' . esc_attr( $year ) . '" class="ctmb-date-year">';
-
-						// Container end.
-						$input .= '</div>';
-
-						break;
-
-					// Date Multiple.
-					case 'date_multiple':
-
 						$input = '';
+
+						// Single or multiple?
+						$multiple = ! empty( $data['field']['date_multiple'] ) ? true : false;
 
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
@@ -613,7 +576,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
 						// JavaScript hides this since element above shows friendly date list.
-						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" data-datepicker-multiple="' . esc_attr( $multiple ) . '" />';
 
 						break;
 
@@ -661,7 +624,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						<?php
 						if (
 							! empty( $data['field']['after_input'] )
-							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'range', 'upload', 'url', 'date', 'date_multiple', 'time' ) ) // specific fields only
+							&& in_array( $data['field']['type'] , array( 'text', 'select', 'number', 'range', 'upload', 'url', 'date', 'time' ) ) // specific fields only
 						) :
 						?>
 							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
@@ -959,32 +922,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					break;
 
-				// Date (form sanitized date from three inputs)
+				// Date(s).
+				// This could be one or multiple dates in YYYY-mm-dd format.
+				// If multiple, save as comma-separated list.
 				case 'date':
-
-					$output = ''; // will be empty if invalid time
-
-					// Get month, day and year from $_POST
-					$m = isset( $_POST[ $key . '-month' ] ) ? trim( $_POST[ $key . '-month' ] ) : '';
-					$d = isset( $_POST[ $key . '-day' ] ) ? trim( $_POST[ $key . '-day' ] ) : '';
-					$y = isset( $_POST[ $key . '-year' ] ) ? trim( $_POST[ $key . '-year' ] ) : '';
-
-					// Valid date
-					if ( strlen( $y ) == 4 && ! empty( $m ) && ! empty( $d ) && checkdate( $m, $d, $y ) ) { // valid year, date given and peoper (no February 31, for example)
-
-						// Pad month and day with 0 (force 2012-6-1 into 2012-06-01)
-						$m = str_pad( $m, 2, '0', STR_PAD_LEFT );
-						$d = str_pad( $d, 2, '0', STR_PAD_LEFT );
-
-						// Form the date for saving in to database
-						$output = "$y-$m-$d";
-
-					}
-
-					break;
-
-				// Date Multiple.
-				case 'date_multiple':
 
 					// Make array out of list of dates.
 					$dates = explode( ',', $output );

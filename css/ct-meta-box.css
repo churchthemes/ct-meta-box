@@ -68,32 +68,17 @@
 			width: 55px;
 		}
 
-		/* Date */
+		/* Date(s) */
 
-		.ctmb-date {
-			vertical-align: baseline;
-			display: inline-block;
-		}
-
-			.ctmb-date-day {
-				width: 45px;
-			}
-
-			.ctmb-date-year {
-				width: 60px;
-			}
-
-		/* Date Multiple */
-
-		.ctmb-date_multiple { /* hide actual input for collecting dates; user sees formatted dates instead */
+		.ctmb-date { /* hide actual input for collecting dates; user sees formatted dates instead */
 			display: none;
 		}
 
-		.ctmb-date_multiple-formatted:not(:empty) {
+		.ctmb-date-formatted:not(:empty) {
 			padding-top: 3px; /* move dates down when present to be in line with label */
 		}
 
-		.ctmb-date_multiple-formatted:empty {
+		.ctmb-date-formatted:empty {
 			margin-top: -8px; /* shift up so button is in line with label */
 		}
 
@@ -115,11 +100,11 @@
 					color: #999;
 				}
 
-		.ctmb-date_multiple-button-container {
+		.ctmb-date-button-container {
 			margin: 10px 0;
 		}
 
-		.ctmb-field-type-date_multiple .datepicker-inline { /* hide datepicker until click button */
+		.ctmb-field-type-date .datepicker-inline { /* hide datepicker until click button */
 			display: none;
 			margin: 15px 0 7px 0;
 		}
