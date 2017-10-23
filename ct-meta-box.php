@@ -576,7 +576,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
 						// JavaScript hides this since element above shows friendly date list.
-						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" data-datepicker-multiple="' . esc_attr( $multiple ) . '" />';
+						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" data-date-multiple="' . esc_attr( $multiple ) . '" />';
 
 						break;
 

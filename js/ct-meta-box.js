@@ -88,20 +88,23 @@ jQuery( document ).ready( function( $ ) {
 		// Localization.
 		$.fn.datepicker.language['dynamic'] = ctmb.datepicker_language;
 
+		// Allow multiple?
+		var multiple = $( this ).data( 'date-multiple' ) ? true : false;
+
 		// Activate Air Datepicker.
 		var $datepicker = $( this ).datepicker( {
 
 			// Options.
-			language: 'dynamic',
-			dateFormat: 'yyyy-mm-dd',
-			multipleDates: true,
-			multipleDatesSeparator: ',',
 			inline: true,
+			dateFormat: 'yyyy-mm-dd',
+			language: 'dynamic',
+			multipleDates: multiple,
+			multipleDatesSeparator: ',',
 
 			// Date selected.
 			onSelect: function( fd, d, picker ) { // date(s) were changed.
 
-				// Continue oly if AJAX not disabled such as when pre-selecting dates in picker on first load.
+				// Continue only if AJAX not disabled such as when pre-selecting dates in picker on first load.
 				if ( ! localize_dates_ajax_disabled ) {
 
 					// Get localized dates via AJAX.
@@ -110,7 +113,18 @@ jQuery( document ).ready( function( $ ) {
 						'nonce' : ctmb.localize_dates_nonce,
 						'dates':  fd,
 					}, function( dates_formatted ) {
-						$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' ).html( dates_formatted ); // add formatted dates to element for user-friendly display..
+
+						// Show date(s) formatted.
+						$( '#' + $( picker.el ).attr( 'id' ) + '-formatted' )
+							.hide()
+							.html( dates_formatted ) // add formatted dates to element for user-friendly display.
+							.show();
+
+						// Hide datepicker when not multiple.
+						if ( ! multiple ) {
+							$( '.datepicker-inline', $field_container ).hide();
+						}
+
 					} );
 
 				}
@@ -140,7 +154,7 @@ jQuery( document ).ready( function( $ ) {
 			// Set the date in the calendar (also re-populates the input).
 			$datepicker.selectDate( initial_date_objects );
 
-			// Re-enable localize_dates_ajax
+			// Re-enable localize_dates_ajax.
 			localize_dates_ajax_disabled = false;
 
 		}
