@@ -124,8 +124,6 @@
 			margin: 15px 0 7px 0;
 		}
 
-
-
 		/* Upload */
 
 		.ctmb-upload,
@@ -170,4 +168,65 @@
 #side-sortables .ctmb-value {
 	width: 100%;
 	display: block;
+}
+
+/* Air Datepicker - more WordPress style / neutral colors */
+
+.datepicker {
+	font-family: inherit;
+	font-size: 13px;
+}
+
+.datepicker-inline .datepicker {
+	border-color: #dddddd !important;
+}
+
+.datepicker--day-name {
+	font-size: 0.85em;
+	font-weight: bold;
+	color: inherit;
+}
+
+.datepicker--nav-title {
+	font-size: 1.05em;
+	font-weight: bold;
+}
+
+.datepicker--time-row input[type='range']:focus::-webkit-slider-thumb,
+.datepicker--time-row input[type='range']:focus::-moz-range-thumb,
+.datepicker--time-row input[type='range']:focus::-ms-thumb {
+	background: #aaa;
+	border-color: #aaa;
+}
+
+.datepicker--cell.-selected-,
+.datepicker--cell.-selected-.-current- {
+	background: #aaa;
+}
+
+.datepicker--cell.-selected-.-focus- {
+	background: #999;
+}
+
+.datepicker--button,
+.datepicker--cell.-current-,
+.datepicker--cell.-current-.-focus-,
+.datepicker--cell.-current-.-in-range- {
+  font-weight: bold;
+  color: inherit;
+}
+
+.datepicker,
+.datepicker--cell,
+.datepicker--cell.-range-from-.-range-to-,
+.datepicker--nav-action,
+.datepicker--nav-title,
+.datepicker--button {
+  border-radius: 0;
+}
+.datepicker--cell.-range-from- {
+	border-radius: 0 0 0 0;
+}
+.datepicker--cell.-range-to- {
+	border-radius: 0 0 0 0;
 }
