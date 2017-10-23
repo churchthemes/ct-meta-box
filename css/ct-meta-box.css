@@ -71,7 +71,7 @@
 		/* Date(s) */
 
 		.ctmb-date { /* hide actual input for collecting dates; user sees formatted dates instead */
-			display: none;
+			/*display: none;*/
 		}
 
 		.ctmb-date-formatted:not(:empty) {
@@ -122,10 +122,6 @@
 		.ctmb-after-input {
 			padding-left: 5px;
 			display: inline-block;
-		}
-
-		.ctmb-after-input.ctmb-day-of-week {
-			color: #595959;
 		}
 
 	/* Inline radio or checkbox_multiple option */

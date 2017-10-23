@@ -1218,6 +1218,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// Sort low to high.
 				asort( $dates );
 
+				// Count dates.
+				$count = count( $dates );
+
 				// Array to add dates to.
 				$dates_localized = array();
 
@@ -1237,7 +1240,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					$ts = strtotime( $date );
 
 					// Localized date.
-					$date_localized = date_i18n( $date_format, $ts );
+					$date_localized = esc_html( date_i18n( $date_format, $ts ) );
+
+					// Add day of week to end if only showing one date and day of week not already present in the date format.
+					if ( 1 === $count && ! preg_match( '/l|N|w/', $date_format ) ) {
+						$date_localized .= ' &ndash; <span class="ctmb-date-day-of-week">' . esc_html( date_i18n( 'l', $ts ) ) . '</span>';
+					}
 
 					// Add icon for removing date.
 					$date_localized .= '<a href="#" class="ctmb-remove-date dashicons dashicons-no-alt" data-ctmb-date="' . esc_attr( $date ) . '"></a>';
