@@ -85,11 +85,14 @@ jQuery( document ).ready( function( $ ) {
 		// Field container.
 		var $field_container = $( this ).parents( '.ctmb-field' );
 
+		// Localization.
+		$.fn.datepicker.language['dynamic'] = ctmb.datepicker_language;
+
 		// Activate Air Datepicker.
 		var $datepicker = $( this ).datepicker( {
 
 			// Options.
-			language: 'en',
+			language: 'dynamic',
 			dateFormat: 'yyyy-mm-dd',
 			multipleDates: true,
 			multipleDatesSeparator: ',',

@@ -1179,12 +1179,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					}
 
-					// Data to pass
+					// Data to pass.
 					wp_localize_script( 'ctmb-meta-boxes', 'ctmb', array(
 						'ajax_url'             => admin_url( 'admin-ajax.php' ),
 						'localize_dates_nonce' => wp_create_nonce( 'ctmb_localize_dates' ),
-						'time_format'          => $time_format, // time format from Settings > General
-						'week_days'            => $this->week_days(), // to show translated week day date fields
+						'datepicker_language'  => $this->datepicker_language(),
+						'time_format'          => $time_format, // time format from Settings > General.
+						'week_days'            => $this->week_days(), // to show translated week day date fields.
 					) );
 
 					// Make sure this is done only once (on first meta box)
@@ -1309,6 +1310,66 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Send friendly dates to client-side for adding to element.
 			return apply_filters( 'ctmb_localize_dates', $dates_localized, $dates );
+
+		}
+
+		/**
+		 * Datepicker language
+		 *
+		 * Dynamically provide language to Air Datepicker based on WordPress settings.
+		 * This uses native WordPress functions for localizing calendar (same as calendar widget).
+		 *
+		 * @since 2.2
+		 * @access public
+		 * @global object $wp_locale
+		 * @return array Localized text strings for Air Datepicker.
+		 */
+		public function datepicker_language() {
+
+			global $wp_locale;
+
+			$language = array();
+
+			// Days of week.
+			for ( $day = 0; $day < 7; $day++ ) {
+
+				// Sunday - Saturday
+				//$language['days']        = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
+				$day_name = $wp_locale->get_weekday( $day );
+				$language['days'][] = $day_name;
+
+				// Sun - Sat
+				//$language['daysShort']   = array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
+				$language['daysShort'][] = $wp_locale->get_weekday_abbrev( $day_name );
+
+				// S - S
+				//$language['daysMin']     = array( 'SU', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' );
+				$language['daysMin'][] = $wp_locale->get_weekday_initial( $day_name );
+
+			}
+
+			// Months of year.
+			for ( $month = 1; $month <= 12; $month++ ) {
+
+				// Pad with leading zero.
+				$month_padded = str_pad( $month, 2, '0', STR_PAD_LEFT );
+
+				// January - December.
+				//$language['months']      = array( 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' );
+				$month_name = $wp_locale->get_month( $month_padded );
+				$language['months'][] = $month_name;
+
+				// Jan - Dec.
+				//$language['monthsShort'] = array( 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' );
+				$language['monthsShort'][] = $wp_locale->get_month_abbrev( $month_name );
+
+			}
+
+			// Sunday as first day of week.
+			$language['firstDay']    = 0;
+
+			// Return filtered.
+			return apply_filters( 'datepicker_language', $language );
 
 		}
 
