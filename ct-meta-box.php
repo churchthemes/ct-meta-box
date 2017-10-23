@@ -1078,7 +1078,6 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Air Datepicker.
 				wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
-				wp_enqueue_script( 'air-datepicker-i18n', trailingslashit( CTMB_URL ) . 'js/i18n/datepicker.en.js', false, $this->version ); // bust cache on update.
 
 				// jQuery Timepicker.
 				// https://github.com/jonthornton/jquery-timepicker
