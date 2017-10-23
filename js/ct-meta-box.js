@@ -87,7 +87,7 @@ jQuery( document ).ready( function( $ ) {
 
 		// Localization.
 		$.fn.datepicker.language['dynamic'] = ctmb.datepicker_language;
-
+console.log($.fn.datepicker.language['dynamic']);
 		// Activate Air Datepicker.
 		var $datepicker = $( this ).datepicker( {
 

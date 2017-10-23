@@ -1343,6 +1343,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$language['daysShort'][] = $wp_locale->get_weekday_abbrev( $day_name );
 
 				// S - S
+				// Air Datepicker uses SU - SA but WordPress provides single-letter abbreviation; same as Calendar widget.
 				//$language['daysMin']     = array( 'SU', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' );
 				$language['daysMin'][] = $wp_locale->get_weekday_initial( $day_name );
 
@@ -1366,7 +1367,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Sunday as first day of week.
-			$language['firstDay']    = 0;
+			$language['firstDay'] = absint( get_option( 'start_of_week' ) );
 
 			// Return filtered.
 			return apply_filters( 'datepicker_language', $language );
