@@ -95,6 +95,9 @@ jQuery( document ).ready( function( $ ) {
 			// Date selected.
 			onSelect: function( fd, d, picker ) { // date(s) were changed.
 
+				// Trigger change event in hidden input so other scripts can do things on change.
+				$( '#' + $( picker.el ).attr( 'id' ) ).change();
+
 				// Continue only if AJAX not disabled such as when pre-selecting dates in picker on first load.
 				if ( ! localize_dates_ajax_disabled ) {
 
