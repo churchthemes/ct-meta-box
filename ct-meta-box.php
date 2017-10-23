@@ -467,7 +467,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 								}
 
 								// Make checkbox with label.
-								$input .= '<div class="ctc-checkbox-multiple-container">';
+								$input .= '<div class="ctmb-checkbox-multiple-container">';
 								$input .= '	<label for="' . $esc_checkbox_id . '">';
 								$input .= '		<input type="checkbox" ' . $data['common_atts'] . ' id="' . $esc_checkbox_id . '" value="' . esc_attr( $option_value ) . '"' . $checked . '/> ' . esc_html( $option_text );
 								$input .= '	</label>';
@@ -488,7 +488,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 								$esc_radio_id = $data['esc_element_id'] . '-' . $option_value;
 
-								$input .= '<div class="ctc-radio-container">';
+								$input .= '<div class="ctmb-radio-container">';
 								$input .= '	<label for="' . $esc_radio_id . '">';
 								$input .= '		<input type="radio" ' . $data['common_atts'] . ' id="' . $esc_radio_id . '" value="' . esc_attr( $option_value ) . '"' . checked( $option_value, $data['value'], false ) . '/> ' . esc_html( $option_text );
 								$input .= '	</label>';
@@ -559,10 +559,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Date(s).
 					case 'date':
 
-						$input = '';
-
 						// Single or multiple?
 						$multiple = ! empty( $data['field']['date_multiple'] ) ? true : false;
+
+						// Open container.
+						$input = '<div class="ctmb-date-container' . ( $multiple ? ' ctmb-date-multiple' : '' ) . '">';
 
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
@@ -577,6 +578,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						// Input to store comma-separated list of dates in YYYY-mm-dd format.
 						// JavaScript hides this since element above shows friendly date list.
 						$input .= '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" data-date-multiple="' . esc_attr( $multiple ) . '" />';
+
+						// Close container.
+						$input .= '</div>';
 
 						break;
 
