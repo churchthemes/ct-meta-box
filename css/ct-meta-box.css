@@ -71,7 +71,7 @@
 		/* Date(s) */
 
 		.ctmb-date { /* hide actual input for collecting dates; user sees formatted dates instead */
-			/*display: none;*/
+			display: none;
 		}
 
 		.ctmb-date-formatted:not(:empty) {
