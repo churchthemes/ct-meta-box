@@ -108,13 +108,13 @@
 				}
 
 		.ctmb-date-button-container {
-			margin: 8px 0 12px 0;
+			margin: 8px 0 6px 0;
 		}
 
 			/* Show button after when less than 2 dates (also see .ctmb-date-button-after above) */
 
 			.ctmb-date-button-after .ctmb-date-button-container {
-				margin: 0 0 8px 0;
+				margin: 0 0 2px 0;
 				position: relative;
 				top: -2px;
 				display: inline-block;
@@ -122,13 +122,13 @@
 
 		.ctmb-field-type-date .datepicker-inline { /* hide datepicker until click button */
 			display: none;
-			margin: 15px 0 7px 0;
+			margin: 21px 0 7px 0;
 		}
 
 			/* Show button after when less than 2 dates (also see .ctmb-date-button-after above) */
 
 			.ctmb-field-type-date:not(.ctmb-date-button-after) .datepicker-inline {
-				margin-top: 0;
+				margin-top: 6px;
 			}
 
 		/* Upload */
