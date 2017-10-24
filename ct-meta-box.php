@@ -590,7 +590,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						break;
 
 					// Time.
-					// HTML5 <time> not supported by major browsers.
+					// HTML5 <time> not supported by major browsers. Or, is it yet?
 					// Using this instead (like Google Calendar): https://github.com/jonthornton/jquery-timepicker.
 					case 'time':
 
