@@ -867,7 +867,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					foreach ( $this->meta_box['fields'][ $key ]['options'] as $option_value => $option_text ) {
 
 						// Posted value is valid, add to new array.
-						if ( in_array( $option_value, $posted_values, true ) ) {
+						if ( in_array( $option_value, $posted_values ) ) {
 							$output[] = $option_value;
 						}
 
