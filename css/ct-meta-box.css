@@ -120,15 +120,15 @@
 				display: inline-block;
 			}
 
-		.ctmb-field-type-date .datepicker-inline { /* hide datepicker until click button */
+		.ctmb-date-container .datepicker-inline { /* hide datepicker until click button */
 			display: none;
-			margin: 21px 0 7px 0;
+			margin: 6px 0 7px 0;
 		}
 
 			/* Show button after when less than 2 dates (also see .ctmb-date-button-after above) */
 
-			.ctmb-field-type-date:not(.ctmb-date-button-after) .datepicker-inline {
-				margin-top: 6px;
+			.ctmb-date-container:not(.ctmb-date-button-after) .datepicker-inline {
+				margin-top: 12px;
 			}
 
 		/* Upload */
