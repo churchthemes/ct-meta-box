@@ -562,12 +562,17 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						// Single or multiple?
 						$multiple = ! empty( $data['field']['date_multiple'] ) ? true : false;
 
+						// How many dates showing?
+						// Show button after if 0 or 1; below if 2+.
+						$dates_array = explode( ',', $data['value'] );
+						$count = count( $dates_array );
+
 						// Open container.
-						$input = '<div class="ctmb-date-container' . ( $multiple ? ' ctmb-date-multiple' : '' ) . '">';
+						$input = '<div class="ctmb-date-container' . ( $multiple ? ' ctmb-date-multiple' : '' ) . ( $count < 2 ? ' ctmb-date-button-after' : '' ) . '">';
 
 						// Element to show localized dates in.
 						$localized_dates = $this->localize_dates( $data['value'] );
-						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted">' . $localized_dates . '</div>'; // JavaScript will fill this on load/change.
+						$input .= '<div id="' . $data['esc_element_id'] . '-formatted" class="ctmb-' . esc_attr( $data['field']['type'] ) . '-formatted"> ' . $localized_dates . ' </div>'; // JavaScript will fill this on load/change.
 
 						// Button for selecting dates.
 						$button = isset( $data['field']['date_button'] ) ? $data['field']['date_button'] : '';

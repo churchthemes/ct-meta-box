@@ -114,6 +114,18 @@ jQuery( document ).ready( function( $ ) {
 							.html( dates_formatted ) // add formatted dates to element for user-friendly display.
 							.show();
 
+						// How many dates showing?
+						// Show button after if 0 or 1; below if 2+.
+						var count = ( dates_formatted.match( /ctmb-localized-date/g ) || [] ).length;
+						if ( count < 2 ) {
+							$( '.ctmb-date-container', $field_container )
+								.removeClass( 'ctmb-date-button-after' ) // don't let it double up.
+								.addClass( 'ctmb-date-button-after' );
+						} else {
+							$( '.ctmb-date-container', $field_container )
+								.removeClass( 'ctmb-date-button-after' );
+						}
+
 						// Hide datepicker when not multiple.
 						if ( ! multiple ) {
 							$( '.datepicker-inline', $field_container ).hide();

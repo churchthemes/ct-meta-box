@@ -78,6 +78,13 @@
 			padding-top: 3px; /* move dates down when present to be in line with label */
 		}
 
+			/* Show button after when less than 2 dates (also see .ctmb-date-button-after below) */
+
+			.ctmb-date-button-after .ctmb-date-formatted:not(:empty) {
+				display: inline-block !important;
+				vertical-align: top;
+			}
+
 		.ctmb-date-formatted:empty {
 			margin-top: -8px; /* shift up so button is in line with label */
 		}
@@ -103,6 +110,15 @@
 		.ctmb-date-button-container {
 			margin: 10px 0;
 		}
+
+			/* Show button after when less than 2 dates (also see .ctmb-date-button-after above) */
+
+			.ctmb-date-button-after .ctmb-date-button-container {
+				margin-top: 0;
+				position: relative;
+				top: -2px;
+				display: inline-block;
+			}
 
 		.ctmb-field-type-date .datepicker-inline { /* hide datepicker until click button */
 			display: none;
