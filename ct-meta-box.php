@@ -452,7 +452,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						if ( ! empty( $data['field']['options'] ) ) {
 
 							// Get saved values.
-							$values = (array) json_decode( $data['value'] ); // cast to array in case empty.
+							$values = explode( ',', $data['value'] ); // convert from comma-separated list to array.
 
 							// Make list of checkboxes.
 							foreach ( $data['field']['options'] as $option_value => $option_text ) {
@@ -461,7 +461,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 								// Value checked?
 								$checked = '';
-								if ( in_array( $option_value, $values, true ) ) {
+								if ( in_array( $option_value, $values ) ) {
 									$checked = ' checked="checked"';
 								}
 
@@ -867,16 +867,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					foreach ( $this->meta_box['fields'][ $key ]['options'] as $option_value => $option_text ) {
 
 						// Posted value is valid, add to new array.
-						// Note: this fails if add true flag for strict comaparison.
+						// Note: this fails if add true flag for strict comparison.
 						if ( in_array( $option_value, $posted_values ) ) {
 							$output[] = $option_value;
 						}
 
 					}
 
-					// Encode multiple values as JSON for storage.
+					// Create comma-separated list.
 					if ( ! empty( $output ) ) {
-						$output = wp_json_encode( $output );
+						$output = implode( ',', $output );
 					} else {
 						$output = ''; // empty string if no data.
 					}
