@@ -174,7 +174,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$this->meta_box['post_type'],
 				$this->meta_box['context'],
 				$this->meta_box['priority'],
-				$this->meta_box['callback_args']
+				isset( $this->meta_box['callback_args'] ) ? $this->meta_box['callback_args'] : array()
 			);
 
 			// Hide if no visible fields.
