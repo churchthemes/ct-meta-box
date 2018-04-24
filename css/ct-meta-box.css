@@ -24,7 +24,7 @@
 	}
 
 		.ctmb-name span { /* (Optional) or (Required) */
-			color: #595959;
+			color: #777;
 			font-weight: normal;
 		}
 
@@ -171,6 +171,20 @@
 #side-sortables .ctmb-value {
 	width: 100%;
 	display: block;
+}
+
+/* Gutenberg adjustments */
+
+.gutenberg .ctmb-name {
+	font-weight: normal;
+}
+
+	.gutenberg .ctmb-name span { /* (Optional) or (Required) */
+		color: #777;
+	}
+
+.gutenberg .description {
+	color: #777;
 }
 
 /* Air Datepicker - more WordPress style / neutral colors */
