@@ -211,6 +211,16 @@ jQuery( document ).ready( function( $ ) {
 		minTime: '06:00' // works for all formats
 	} );
 
+	/**************************************
+	 * READONLY
+	 **************************************/
+
+	// Prevent checkbox/radio changes on readonly inputs.
+	// readonly attribute itself does not stop changes to checkbox states.
+	$( '.ctmb-field input[type=checkbox][readonly], .ctmb-field input[type=radio][readonly]' ).click( function( e ) {
+		return false;
+	} );
+
 } );
 
 /**************************************
