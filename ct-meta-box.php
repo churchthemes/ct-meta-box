@@ -45,6 +45,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public $meta_box;
 
 		/**
+		 * Has date field?
+		 *
+		 * @since 2.2.3
+		 * @var bool
+		 */
+		public $has_date_field;
+
+		/**
 		 * Constructor
 		 *
 		 * @since 0.8.5
@@ -118,6 +126,11 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Allow filtering of individual fields after all other manipulations.
 				$meta_box['fields'][ $key ] = apply_filters( 'ctmb_field-' . $key, $meta_box['fields'][ $key ] );
+
+				// Has a date field?
+				if ( isset( $field['type'] ) && 'date' === $field['type'] ) {
+					$this->has_date_field = true;
+				}
 
 			}
 
@@ -1039,7 +1052,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				wp_enqueue_style( 'thickbox' );
 
 				// Air Datepicker.
-				wp_enqueue_style( 'air-datepicker', trailingslashit( CTMB_URL ) . 'css/datepicker.min.css', false, $this->version ); // bust cache on update.
+				if ( ! empty( $this->has_date_field ) ) {  // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
+					wp_enqueue_style( 'air-datepicker', trailingslashit( CTMB_URL ) . 'css/datepicker.min.css', false, $this->version ); // bust cache on update.
+				}
 
 				// jQuery Timepicker.
 				// https://github.com/jonthornton/jquery-timepicker
@@ -1083,7 +1098,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				wp_enqueue_script( 'thickbox' );
 
 				// Air Datepicker.
-				wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
+				if ( ! empty( $this->has_date_field ) ) { // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
+					wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
+				}
 
 				// jQuery Timepicker.
 				// https://github.com/jonthornton/jquery-timepicker
