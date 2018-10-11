@@ -189,65 +189,65 @@
 
 /* Air Datepicker - more WordPress style / neutral colors */
 
-.datepicker {
+.ctmb-date-container .datepicker {
 	font-family: inherit;
 	font-size: 13px;
 }
 
-.datepicker-inline .datepicker {
+.ctmb-date-container .datepicker-inline .datepicker {
 	border-color: #dddddd !important;
 }
 
-.datepicker--day-name {
+.ctmb-date-container .datepicker--day-name {
 	font-size: 0.9em;
 	font-weight: bold;
 	color: inherit;
 }
 
-.datepicker--nav-title {
+.ctmb-date-container .datepicker--nav-title {
 	font-size: 1.05em;
 	font-weight: bold;
 }
 
-.datepicker--cell {
+.ctmb-date-container .datepicker--cell {
   height: 28px;
 }
 
-.datepicker--time-row input[type='range']:focus::-webkit-slider-thumb,
-.datepicker--time-row input[type='range']:focus::-moz-range-thumb,
-.datepicker--time-row input[type='range']:focus::-ms-thumb {
+.ctmb-date-container .datepicker--time-row input[type='range']:focus::-webkit-slider-thumb,
+.ctmb-date-container .datepicker--time-row input[type='range']:focus::-moz-range-thumb,
+.ctmb-date-container .datepicker--time-row input[type='range']:focus::-ms-thumb {
 	background: #aaa;
 	border-color: #aaa;
 }
 
-.datepicker--cell.-selected-,
-.datepicker--cell.-selected-.-current- {
+.ctmb-date-container .datepicker--cell.-selected-,
+.ctmb-date-container .datepicker--cell.-selected-.-current- {
 	background: #aaa;
 }
 
-.datepicker--cell.-selected-.-focus- {
+.ctmb-date-container .datepicker--cell.-selected-.-focus- {
 	background: #999;
 }
 
-.datepicker--button,
-.datepicker--cell.-current-,
-.datepicker--cell.-current-.-focus-,
-.datepicker--cell.-current-.-in-range- {
+.ctmb-date-container .datepicker--button,
+.ctmb-date-container .datepicker--cell.-current-,
+.ctmb-date-container .datepicker--cell.-current-.-focus-,
+.ctmb-date-container .datepicker--cell.-current-.-in-range- {
   font-weight: bold;
   color: inherit;
 }
 
-.datepicker,
-.datepicker--cell,
-.datepicker--cell.-range-from-.-range-to-,
-.datepicker--nav-action,
-.datepicker--nav-title,
-.datepicker--button {
+.ctmb-date-container .datepicker,
+.ctmb-date-container .datepicker--cell,
+.ctmb-date-container .datepicker--cell.-range-from-.-range-to-,
+.ctmb-date-container .datepicker--nav-action,
+.ctmb-date-container .datepicker--nav-title,
+.ctmb-date-container .datepicker--button {
   border-radius: 0;
 }
-.datepicker--cell.-range-from- {
+.ctmb-date-container .datepicker--cell.-range-from- {
 	border-radius: 0 0 0 0;
 }
-.datepicker--cell.-range-to- {
+.ctmb-date-container .datepicker--cell.-range-to- {
 	border-radius: 0 0 0 0;
 }
