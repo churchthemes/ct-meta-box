@@ -1099,7 +1099,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Air Datepicker.
 				if ( ! empty( $this->has_date_field ) ) { // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
+
+					// Enqueue Air Datepicker.
 					wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
+
+					// Deregister jQuery UI Datepicker to prevent conflicts with other plugins since Air Datepicker uses same name.
+					// This is a workaround until Air Datepicker uses distinct name. https://github.com/t1m0n/air-datepicker/issues/170.
+					wp_deregister_script( 'jquery-ui-datepicker' );
+
 				}
 
 				// jQuery Timepicker.
