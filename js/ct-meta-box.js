@@ -11,7 +11,7 @@ jQuery(document).ready(function ($) {
 	// Change visibility of fields based on other fields' values
 	// This runs on page load and form field change
 	ctmb_change_visibility(); // on load
-	$('form .ctmb-field :input').change(function () { // any form input changes
+	$('form .ctmb-field :input').on('change', function () { // any form input changes
 		ctmb_change_visibility();
 	});
 

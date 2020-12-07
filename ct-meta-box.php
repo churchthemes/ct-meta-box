@@ -14,12 +14,12 @@
  */
 
 // No direct access.
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined( 'ABSPATH' )) {
 	exit;
 }
 
 // Class may be used in both theme and plugin(s).
-if ( ! class_exists( 'CT_Meta_Box' ) ) {
+if (! class_exists( 'CT_Meta_Box' )) {
 
 	/**
 	 * Main class
@@ -89,12 +89,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Filter meta box data (before anything).
 			$meta_box = apply_filters( 'ctmb_meta_box', $meta_box );
-			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID.
+			if (! empty( $meta_box['id'] )) { // filter meta box by its ID.
 				$meta_box = apply_filters( 'ctmb_meta_box-' . $meta_box['id'], $meta_box );
 			}
 
 			// Filter fields by meta box ID.
-			if ( ! empty( $meta_box['id'] ) ) { // filter meta box by its ID.
+			if (! empty( $meta_box['id'] )) { // filter meta box by its ID.
 				$meta_box['fields'] = apply_filters( 'ctmb_fields-' . $meta_box['id'], $meta_box['fields'] );
 			}
 
@@ -103,7 +103,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Fill array of visible fields with all by default.
 			$visible_fields = array();
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 				$visible_fields[] = $key;
 			}
 
@@ -114,10 +114,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$field_overrides = apply_filters( 'ctmb_field_overrides-' . $meta_box['post_type'], array(), $meta_box['post_type'] ); // by default no overrides.
 
 			// Loop fields to modify them with filtered data.
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 
 				// Selectively override field data based on filtered array.
-				if ( ! empty( $field_overrides[ $key ] ) && is_array( $field_overrides[ $key ] ) ) {
+				if (! empty( $field_overrides[ $key ] ) && is_array( $field_overrides[ $key ] )) {
 					$meta_box['fields'][ $key ] = array_merge( $field, $field_overrides[ $key ] ); // merge filtered in data over top existing data.
 				}
 
@@ -128,7 +128,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$meta_box['fields'][ $key ] = apply_filters( 'ctmb_field-' . $key, $meta_box['fields'][ $key ] );
 
 				// Has a date field?
-				if ( isset( $field['type'] ) && 'date' === $field['type'] ) {
+				if (isset( $field['type'] ) && 'date' === $field['type']) {
 					$this->has_date_field = true;
 				}
 
@@ -150,7 +150,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$screen = get_current_screen();
 
 			// Specified post type only.
-			if ( $screen->post_type === $this->meta_box['post_type'] ) {
+			if ($screen->post_type === $this->meta_box['post_type']) {
 
 				// Add meta boxes.
 				add_action( 'add_meta_boxes', array( &$this, 'add' ) );
@@ -212,10 +212,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Loop fields to find at least one that is visible.
 			$fields = $this->meta_box['fields'];
-			foreach ( $fields as $field ) {
+			foreach ($fields as $field) {
 
 				// Visible?
-				if ( empty( $field['hidden'] ) ) {
+				if (empty( $field['hidden'] )) {
 					$visible = true;
 					break;
 				}
@@ -223,7 +223,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Output CSS to <head> to hide meta box and Screen Options control.
-			if ( ! $visible ) {
+			if (! $visible) {
 
 				?>
 				<style type="text/css">
@@ -250,16 +250,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Only on pages.
 			$screen = get_current_screen();
-			if ( 'page' !== $screen->post_type ) {
+			if ('page' !== $screen->post_type) {
 				return;
 			}
 
 			// Loop fields.
 			$fields = $this->meta_box['fields'];
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 
 				// Only if has page_templates and not a field that is always hidden.
-				if ( ! empty( $field['page_templates'] ) && empty( $field['hidden'] ) ) {
+				if (! empty( $field['page_templates'] ) && empty( $field['hidden'] )) {
 
 					$json_page_templates = wp_json_encode( $field['page_templates'] );
 
@@ -268,7 +268,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					<script type="text/javascript">
 					jQuery(document).ready(function($) {
 						ctmb_page_template_field_visibility( '<?php echo esc_js( $key ); ?>', <?php echo esc_js( $json_page_templates ); ?> ); // First load.
-						$( '#page_template' ).change( function() { // Changed page template
+						$( '#page_template' ).on('change', function() { // Changed page template
 							ctmb_page_template_field_visibility( '<?php echo esc_js( $key ); ?>', <?php echo esc_js( $json_page_templates ); ?> );
 						});
 					});
@@ -299,7 +299,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Loop fields.
 			$fields = $this->meta_box['fields'];
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 
 				// Output field.
 				$this->field_output( $key, $field );
@@ -360,24 +360,24 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			);
 			$classes = array();
 			$classes[] = 'ctmb-' . $data['field']['type'];
-			if ( ! empty( $default_classes[ $data['field']['type'] ] ) ) {
+			if (! empty( $default_classes[ $data['field']['type'] ] )) {
 				$classes[] = $default_classes[ $data['field']['type'] ];
 			}
-			if ( ! empty( $data['field']['class'] ) ) {
+			if (! empty( $data['field']['class'] )) {
 				$classes[] = $data['field']['class'];
 			}
 			$data['classes'] = implode( ' ', $classes );
 
 			// Name.
 			$name = $data['key'];
-			if ( 'checkbox_multiple' === $data['field']['type'] ) {
+			if ('checkbox_multiple' === $data['field']['type']) {
 				$name .= '[]';
 			}
 
 			// Common attributes.
 			$data['common_atts'] = 'name="' . esc_attr( $name ) . '" class="' . esc_attr( $data['classes'] ) . '"';
-			if ( ! empty( $data['field']['attributes'] ) ) { // add custom attributes.
-				foreach ( $data['field']['attributes'] as $attr_name => $attr_value ) {
+			if (! empty( $data['field']['attributes'] )) { // add custom attributes.
+				foreach ($data['field']['attributes'] as $attr_name => $attr_value) {
 					$data['common_atts'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
 				}
 			}
@@ -386,18 +386,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$data['field_class'] = array();
 			$data['field_class'][] = 'ctmb-field';
 			$data['field_class'][] = 'ctmb-field-type-' . $data['field']['type'];
-			if ( ! empty( $data['field']['hidden'] ) ) { // Hidden (for internal use only, via prepare() filter).
+			if (! empty( $data['field']['hidden'] )) { // Hidden (for internal use only, via prepare() filter).
 				$data['field_class'][] = 'ctmb-hidden';
 			}
-			if ( ! empty( $data['field']['field_class'] ) ) {
+			if (! empty( $data['field']['field_class'] )) {
 				$data['field_class'][] = $data['field']['field_class']; // append custom classes.
 			}
 			$data['field_class'] = implode( ' ', $data['field_class'] );
 
 			// Field container styles.
 			$data['field_attributes'] = '';
-			if ( ! empty( $data['field']['field_attributes'] ) ) { // add custom attributes.
-				foreach ( $data['field']['field_attributes'] as $attr_name => $attr_value ) {
+			if (! empty( $data['field']['field_attributes'] )) { // add custom attributes.
+				foreach ($data['field']['field_attributes'] as $attr_name => $attr_value) {
 					$data['field_attributes'] .= ' ' . $attr_name . '="' . esc_attr( $attr_value ) . '"';
 				}
 			}
@@ -407,7 +407,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			 */
 
 			// Use custom function to render custom field content.
-			if ( ! empty( $data['field']['custom_field'] ) ) {
+			if (! empty( $data['field']['custom_field'] )) {
 				$input = call_user_func( $data['field']['custom_field'], $data );
 			}
 
@@ -416,7 +416,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 				// Switch thru types to render differently.
 				$input = '';
-				switch ( $data['field']['type'] ) {
+				switch ($data['field']['type']) {
 
 					// Text.
 					// URL.
@@ -442,7 +442,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 						$input  = '<input type="hidden" ' . $data['common_atts'] . ' value="" />'; // causes unchecked box to post empty value (helps with default handling)
 						$input .= '<label for="' . $data['esc_element_id'] . '">';
 						$input .= '	<input type="checkbox" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="1"' . checked( '1', $data['value'], false ) . '/>';
-						if ( ! empty( $data['field']['checkbox_label'] ) ) {
+						if (! empty( $data['field']['checkbox_label'] )) {
 							$input .= ' ';
 							$input .= wp_kses(
 								$data['field']['checkbox_label'],
@@ -463,19 +463,19 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Checkbox Multiple.
 					case 'checkbox_multiple':
 
-						if ( ! empty( $data['field']['options'] ) ) {
+						if (! empty( $data['field']['options'] )) {
 
 							// Get saved values.
 							$values = explode( ',', $data['value'] ); // convert from comma-separated list to array.
 
 							// Make list of checkboxes.
-							foreach ( $data['field']['options'] as $option_value => $option_text ) {
+							foreach ($data['field']['options'] as $option_value => $option_text) {
 
 								$esc_checkbox_id = $data['esc_element_id'] . '-' . $option_value;
 
 								// Value checked?
 								$checked = '';
-								if ( in_array( $option_value, $values ) ) {
+								if (in_array( $option_value, $values )) {
 									$checked = ' checked="checked"';
 								}
 
@@ -495,9 +495,9 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Radio.
 					case 'radio':
 
-						if ( ! empty( $data['field']['options'] ) ) {
+						if (! empty( $data['field']['options'] )) {
 
-							foreach ( $data['field']['options'] as $option_value => $option_text ) {
+							foreach ($data['field']['options'] as $option_value => $option_text) {
 
 								$esc_radio_id = $data['esc_element_id'] . '-' . $option_value;
 
@@ -516,10 +516,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Select.
 					case 'select':
 
-						if ( ! empty( $data['field']['options'] ) ) {
+						if (! empty( $data['field']['options'] )) {
 
 							$input .= '<select ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '">';
-							foreach ( $data['field']['options'] as $option_value => $option_text ) {
+							foreach ($data['field']['options'] as $option_value => $option_text) {
 								$input .= '<option value="' . esc_attr( $option_value ) . '" ' . selected( $option_value, $data['value'], false ) . '> ' . esc_html( $option_text ) . '</option>';
 							}
 							$input .= '</select>';
@@ -620,18 +620,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			 */
 
 			// Output field.
-			if ( ! empty( $input ) ) { // don't render if type invalid.
+			if (! empty( $input )) { // don't render if type invalid.
 
 				?>
 				<div id="ctmb-field-<?php echo esc_attr( $data['key'] ); ?>" class="<?php echo esc_attr( $data['field_class'] ); ?>"<?php echo $data['field_attributes']; ?>>
 
 					<div class="ctmb-name">
 
-						<?php if ( ! empty( $data['field']['name'] ) ) : ?>
+						<?php if (! empty( $data['field']['name'] )) : ?>
 
 							<?php echo esc_html( $data['field']['name'] ); ?>
 
-							<?php if ( ! empty( $data['field']['after_name'] ) ) : ?>
+							<?php if (! empty( $data['field']['after_name'] )) : ?>
 								<span><?php echo esc_html( $data['field']['after_name'] ); ?></span>
 							<?php endif; ?>
 
@@ -652,7 +652,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 							<span class="ctmb-after-input"><?php echo esc_html( $data['field']['after_input'] ); ?></span>
 						<?php endif; ?>
 
-						<?php if ( ! empty( $data['field']['desc'] ) ) : ?>
+						<?php if (! empty( $data['field']['desc'] )) : ?>
 
 							<p class="description">
 								<?php
@@ -703,26 +703,26 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$value = '';
 
 			// Get saved value, if any.
-			if ( empty( $default_only ) ) { // sometimes only want to check if default should be used.
+			if (empty( $default_only )) { // sometimes only want to check if default should be used.
 				$value = get_post_meta( $post->ID, $key, true );
 			}
 
 			// No saved value.
-			if ( empty( $value ) ) {
+			if (empty( $value )) {
 
 				// Get field data.
 				$field = $this->meta_box['fields'][ $key ];
 
 				// Default is not empty.
-				if ( ! empty( $field['default'] ) ) {
+				if (! empty( $field['default'] )) {
 
 					// Field cannot be empty, use default.
-					if ( ! empty( $field['no_empty'] ) ) {
+					if (! empty( $field['no_empty'] )) {
 						$value = $field['default'];
 					}
 
 					// Field can be empty but this is first add, use default.
-					elseif ( 'post' === $screen->base && 'add' === $screen->action ) {
+					elseif ('post' === $screen->base && 'add' === $screen->action) {
 						$value = $field['default'];
 					}
 
@@ -745,25 +745,25 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function save( $post_id, $post ) {
 
 			// Is a POST occurring?
-			if ( empty( $_POST ) ) {
+			if (empty( $_POST )) {
 				return false;
 			}
 
 			// Not an auto-save (meta values not submitted).
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			if (defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE) {
 				return false;
 			}
 
 			// Verify the nonce.
 			$nonce_key = $this->meta_box['id'] . '_nonce';
 			$nonce_action = $this->meta_box['id'] . '_save';
-			if ( empty( $_POST[ $nonce_key ] ) || ! wp_verify_nonce( $_POST[ $nonce_key ], $nonce_action ) ) {
+			if (empty( $_POST[ $nonce_key ] ) || ! wp_verify_nonce( $_POST[ $nonce_key ], $nonce_action )) {
 				return false;
 			}
 
 			// Make sure user has permission to edit.
 			$post_type = get_post_type_object( $post->post_type );
-			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+			if (! current_user_can( $post_type->cap->edit_post, $post_id )) {
 				return false;
 			}
 
@@ -772,7 +772,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Sanitize fields.
 			$sanitized_values = array();
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 
 				// Sanitize value.
 				// General sanitization and sanitization based on field type, options, no_empty, etc.
@@ -781,12 +781,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Run additional custom sanitization function if config requires it.
-			if ( ! empty( $this->meta_box['custom_sanitize'] ) ) {
+			if (! empty( $this->meta_box['custom_sanitize'] )) {
 				$sanitized_values = call_user_func( $this->meta_box['custom_sanitize'], $sanitized_values );
 			}
 
 			// Save fields.
-			foreach ( $sanitized_values as $key => $value ) {
+			foreach ($sanitized_values as $key => $value) {
 
 				// Add value if it key does not exist.
 				// Or upate value it key does exist.
@@ -831,7 +831,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$input = isset( $_POST[ $key ] ) ? $_POST[ $key ] : '';
 
 			// General sanitization.
-			if ( is_array( $input ) ) {
+			if (is_array( $input )) {
 				$output = array_map( 'stripslashes', $input );
 				$output = array_map( 'trim', $output );
 			} else {
@@ -839,12 +839,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Empty value if specific page templates required but not used.
-			if ( ! empty( $output ) && ! empty( $this->meta_box['fields'][ $key ]['page_templates'] ) && ( ! isset( $_POST['page_template'] ) || ! in_array( $_POST['page_template'], $this->meta_box['fields'][ $key ]['page_templates'] ) ) ) {
+			if (! empty( $output ) && ! empty( $this->meta_box['fields'][ $key ]['page_templates'] ) && ( ! isset( $_POST['page_template'] ) || ! in_array( $_POST['page_template'], $this->meta_box['fields'][ $key ]['page_templates'] ) )) {
 				$output = '';
 			}
 
 			// Sanitize based on type.
-			switch ( $this->meta_box['fields'][ $key ]['type'] ) {
+			switch ($this->meta_box['fields'][ $key ]['type']) {
 
 				// Text.
 				// Textarea.
@@ -852,12 +852,12 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				case 'textarea':
 
 					// Strip tags if config does not allow HTML.
-					if ( empty( $this->meta_box['fields'][ $key ]['allow_html'] ) ) {
+					if (empty( $this->meta_box['fields'][ $key ]['allow_html'] )) {
 						$output = trim( strip_tags( $output ) );
 					}
 
 					// Sanitize HTML in case used (remove evil tags like script, iframe) - same as post content
-					if ( ! current_user_can( 'unfiltered_html' ) ) { // Admin only.
+					if (! current_user_can( 'unfiltered_html' )) { // Admin only.
 						$output = stripslashes( wp_filter_post_kses( addslashes( $output ), $allowedposttags ) );
 					}
 
@@ -878,18 +878,18 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Loop array of valid option values to build sanitized array in correct order.
 					$output = array(); // start fresh.
-					foreach ( $this->meta_box['fields'][ $key ]['options'] as $option_value => $option_text ) {
+					foreach ($this->meta_box['fields'][ $key ]['options'] as $option_value => $option_text) {
 
 						// Posted value is valid, add to new array.
 						// Note: this fails if add true flag for strict comparison.
-						if ( in_array( $option_value, $posted_values ) ) {
+						if (in_array( $option_value, $posted_values )) {
 							$output[] = $option_value;
 						}
 
 					}
 
 					// Create comma-separated list.
-					if ( ! empty( $output ) ) {
+					if (! empty( $output )) {
 						$output = implode( ',', $output );
 					} else {
 						$output = ''; // empty string if no data.
@@ -903,7 +903,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				case 'select':
 
 					// If option invalid, blank it so default will be used.
-					if ( ! isset( $this->meta_box['fields'][ $key ]['options'][ $output ] ) ) {
+					if (! isset( $this->meta_box['fields'][ $key ]['options'][ $output ] )) {
 						$output = '';
 					}
 
@@ -936,7 +936,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				case 'upload_textarea':
 
 					// URL?
-					if ( preg_match( '/^(http(s*)):\/\//i', $output ) ) { // if begins with http:// or https://, must be URL.
+					if (preg_match( '/^(http(s*)):\/\//i', $output )) { // if begins with http:// or https://, must be URL.
 						$output = esc_url_raw( $output ); // force valid URL or use nothing.
 					}
 
@@ -955,19 +955,19 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Make validated list of dates.
 					$valid_dates = array();
-					foreach ( $dates as $date ) {
+					foreach ($dates as $date) {
 
 						// Trim, just in case.
 						$date = trim( $date );
 
 						// Have date value with proper format?
-						if ( $date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date ) ) {
+						if ($date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date )) {
 
 							// Extract month, day, year from YYYY-MM-DD date.
 							list( $y, $m, $d ) = explode( '-', $date );
 
 							// Validate year, month and date (e.g. no February 31).
-							if ( checkdate( $m, $d, $y ) ) {
+							if (checkdate( $m, $d, $y )) {
 
 								// Add valid date to array to be made into list.
 								$valid_dates[] = "$y-$m-$d";
@@ -980,7 +980,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 					// Make cleaned list of dates.
 					// Comma-separated list without spaces, having valid dates in YYYY-mm-dd format.
-					if ( $valid_dates ) {
+					if ($valid_dates) {
 						$valid_dates = array_unique( $valid_dates ); // no duplicate dates.
 						$output = implode( ',', $valid_dates ); // array to list.
 					} else { // if no valid dates, save empty.
@@ -995,7 +995,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					// Is time valid?
 					// If it's not valid 12 or 24 hour format, date will return 1970 instead of current year.
 					$ts = strtotime( $output );
-					if ( date( 'Y', $ts ) == date( 'Y' ) ) {
+					if (date( 'Y', $ts ) == date( 'Y' )) {
 
 						// Convert to 24 hour time.
 						// Easier sorting and comparison.
@@ -1010,13 +1010,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Run additional custom sanitization function if config requires it.
-			if ( ! empty( $this->meta_box['fields'][ $key ]['custom_sanitize'] ) ) {
+			if (! empty( $this->meta_box['fields'][ $key ]['custom_sanitize'] )) {
 				$output = call_user_func( $this->meta_box['fields'][ $key ]['custom_sanitize'], $output );
 			}
 
 			// Sanitization left value empty but empty is not allowed, use default.
 			$output = trim( $output );
-			if ( empty( $output ) ) {
+			if (empty( $output )) {
 				$output = $this->field_value( $key, 'default_only' ); // won't try to get saved value.
 			}
 
@@ -1036,7 +1036,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			global $ctmb_styles_enqueued;
 
 			// Styles need not be enqueued for every meta box on a page.
-			if ( ! empty( $ctmb_styles_enqueued ) ) {
+			if (! empty( $ctmb_styles_enqueued )) {
 				return;
 			} else {
 				$ctmb_styles_enqueued = true;
@@ -1046,13 +1046,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$screen = get_current_screen();
 
 			// Add/edit any post type.
-			if ( 'post' === $screen->base ) {
+			if ('post' === $screen->base) {
 
 				// Always enable thickbox on add/edit post for custom meta upload fields.
 				wp_enqueue_style( 'thickbox' );
 
 				// Air Datepicker.
-				if ( ! empty( $this->has_date_field ) ) {  // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
+				if (! empty( $this->has_date_field )) {  // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
 					wp_enqueue_style( 'air-datepicker', trailingslashit( CTMB_URL ) . 'css/datepicker.min.css', false, $this->version ); // bust cache on update.
 				}
 
@@ -1081,7 +1081,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			global $ctmb_scripts_enqueued;
 
 			// Scripts need not be enqueued for every meta box on a page.
-			if ( ! empty( $ctmb_scripts_enqueued ) ) {
+			if (! empty( $ctmb_scripts_enqueued )) {
 				return;
 			} else {
 				$ctmb_scripts_enqueued = true;
@@ -1091,14 +1091,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$screen = get_current_screen();
 
 			// Add/edit any post type.
-			if ( 'post' === $screen->base ) {
+			if ('post' === $screen->base) {
 
 				// Always enable media-upload and thickbox on add/edit post for custom meta upload fields.
 				wp_enqueue_script( 'media-upload' );
 				wp_enqueue_script( 'thickbox' );
 
 				// Air Datepicker.
-				if ( ! empty( $this->has_date_field ) ) { // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
+				if (! empty( $this->has_date_field )) { // only if have a date field, to prevent conflicts with jQuery UI Datepicker.
 
 					// Enqueue Air Datepicker.
 					wp_enqueue_script( 'air-datepicker', trailingslashit( CTMB_URL ) . 'js/datepicker.min.js', false, $this->version ); // bust cache on update.
@@ -1134,16 +1134,16 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$screen = get_current_screen();
 
 			// Add/edit any post type.
-			if ( 'post' === $screen->base ) {
+			if ('post' === $screen->base) {
 
 				// Global localization.
 				// This is data all meta boxes will use.
 				// Run this localization once per page, not on every meta box instantiation.
-				if ( empty( $ctmb_scripts_localized_globally ) ) {
+				if (empty( $ctmb_scripts_localized_globally )) {
 
 					// Time format 12- or 24-hour format.
 					$time_format = get_option( 'time_format' ); // from General Settings.
-					if ( ! in_array( $time_format, array( 'g:i a', 'g:ia', 'g:i A', 'g:iA', 'H:i' ) ) ) {
+					if (! in_array( $time_format, array( 'g:i a', 'g:ia', 'g:i A', 'g:iA', 'H:i' ) )) {
 
 						// If user enters a custom format then default this to 12-hour format.
 						// It is most common in English-speaking countries and most others are able to recognize it.
@@ -1173,7 +1173,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				// (maybe WordPress will in the future cause duplicate names to override instead)
 				$data[ $this->meta_box['id'] ] = $this->js_meta_box(); // pass in only as much meta box / field data as necessary.
 				$ctmb_fields_localized = empty( $ctmb_fields_localized ) ? array() : $ctmb_fields_localized;
-				if ( ! empty( $data[ $this->meta_box['id'] ] ) ) { // if there is anything to add.
+				if (! empty( $data[ $this->meta_box['id'] ] )) { // if there is anything to add.
 					$ctmb_fields_localized = array_merge( $ctmb_fields_localized, $data );
 					wp_localize_script( 'ctmb-meta-boxes', 'ctmb_meta_boxes', $ctmb_fields_localized );
 				}
@@ -1195,7 +1195,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 		public function localize_dates_ajax() {
 
 			// Only if is AJAX request.
-			if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if (! ( defined( 'DOING_AJAX' ) && DOING_AJAX )) {
 				exit;
 			}
 
@@ -1203,7 +1203,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			check_ajax_referer( 'ctmb_localize_dates', 'nonce' );
 
 			// Check user capabilities add/edit.
-			if ( ! current_user_can( 'edit_posts' ) ) {
+			if (! current_user_can( 'edit_posts' )) {
 				exit;
 			}
 
@@ -1240,7 +1240,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$date_format = get_option( 'date_format' );
 
 			// Have dates.
-			if ( $dates ) {
+			if ($dates) {
 
 				// Convert to array.
 				$dates = explode( ',', $dates );
@@ -1255,14 +1255,14 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 				$dates_localized = array();
 
 				// Add formatted dates to array.
-				foreach ( $dates as $date ) {
+				foreach ($dates as $date) {
 
 					// Trim just in case.
 					$date = trim( $date );
 
 					// Make sure in YYYY-mm-dd format and date is valid.
 					// Keep strotime from creating a wrong timestamp from an invalid date.
-					if ( ! $this->valid_date( $date ) ) {
+					if (! $this->valid_date( $date )) {
 						continue;
 					}
 
@@ -1273,7 +1273,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 					$date_localized = esc_html( date_i18n( $date_format, $ts ) );
 
 					// Add day of week to end if only showing one date and day of week not already present in the date format.
-					if ( 1 === $count && ! preg_match( '/l|N|w/', $date_format ) ) {
+					if (1 === $count && ! preg_match( '/l|N|w/', $date_format )) {
 						$date_localized .= ' &ndash; <span class="ctmb-date-day-of-week">' . esc_html( date_i18n( 'l', $ts ) ) . '</span>';
 					}
 
@@ -1313,7 +1313,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$language = array();
 
 			// Days of week.
-			for ( $day = 0; $day < 7; $day++ ) {
+			for ($day = 0; $day < 7; $day++) {
 
 				// Sunday - Saturday
 				//$language['days']        = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
@@ -1332,7 +1332,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			}
 
 			// Months of year.
-			for ( $month = 1; $month <= 12; $month++ ) {
+			for ($month = 1; $month <= 12; $month++) {
 
 				// Pad with leading zero.
 				$month_padded = str_pad( $month, 2, '0', STR_PAD_LEFT );
@@ -1369,7 +1369,7 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			$week_days = array();
 
-			for ( $day = 0; $day < 7; $day++ ) {
+			for ($day = 0; $day < 7; $day++) {
 				$week_days[ $day ] = $wp_locale->get_weekday( $day );
 			}
 
@@ -1392,10 +1392,10 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 
 			// Loop fields.
 			$fields = $this->meta_box['fields'];
-			foreach ( $fields as $key => $field ) {
+			foreach ($fields as $key => $field) {
 
 				// For now only visibility data is needed for each field.
-				if ( empty( $field['visibility'] ) ) {
+				if (empty( $field['visibility'] )) {
 					continue;
 				}
 
@@ -1422,13 +1422,13 @@ if ( ! class_exists( 'CT_Meta_Box' ) ) {
 			$valid = false;
 
 			// Have date value with proper format of YYYY-mm-dd.
-			if ( $date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date ) ) {
+			if ($date && preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date )) {
 
 				// Extract month, day, year from YYYY-mm-dd date.
 				list( $y, $m, $d ) = explode( '-', $date );
 
 				// Validate year, month and date (e.g. no February 31).
-				if ( checkdate( $m, $d, $y ) ) {
+				if (checkdate( $m, $d, $y )) {
 					$valid = true;
 				}
 
